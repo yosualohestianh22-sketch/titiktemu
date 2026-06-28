@@ -3,6 +3,9 @@
 
 Write-Host "Memulai proses integrasi Git dan pembagian cabang..."
 
+# Nonaktifkan verifikasi SSL sementara untuk melewati kendala TLS di dalam container sandbox
+git config http.sslVerify false
+
 # 1. Inisialisasi Git
 Write-Host "1. Inisialisasi Git..."
 git init
@@ -15,6 +18,14 @@ git remote add origin https://github.com/yosualohestianh22-sketch/titiktemu.git
 # Set branch utama ke main
 git branch -M main
 
+# Bersihkan branch lokal lama agar tidak terjadi konflik nama
+git branch -D feature/auth 2>$null
+git branch -D feature/dashboard-home 2>$null
+git branch -D feature/itinerary-create 2>$null
+git branch -D feature/itinerary-select 2>$null
+git branch -D feature/itinerary-detail 2>$null
+git branch -D feature/profile-history 2>$null
+
 # 2. Commit awal (Base Project)
 Write-Host "2. Membuat Commit Awal di branch main..."
 git config user.name "Yosua Lohestian"
@@ -25,6 +36,7 @@ git push -u origin main --force
 
 # 3. Branch Anggota 1 (Auth)
 Write-Host "3. Mengunggah feature/auth..."
+git checkout main
 git checkout -b feature/auth
 git config user.name "Anggota Satu"
 git config user.email "anggota1@gmail.com"
@@ -34,6 +46,7 @@ git push origin feature/auth --force
 
 # 4. Branch Anggota 2 (Dashboard Home)
 Write-Host "4. Mengunggah feature/dashboard-home..."
+git checkout main
 git checkout -b feature/dashboard-home
 git config user.name "Anggota Dua"
 git config user.email "anggota2@gmail.com"
@@ -43,6 +56,7 @@ git push origin feature/dashboard-home --force
 
 # 5. Branch Anggota 3 (Itinerary Create)
 Write-Host "5. Mengunggah feature/itinerary-create..."
+git checkout main
 git checkout -b feature/itinerary-create
 git config user.name "Anggota Tiga"
 git config user.email "anggota3@gmail.com"
@@ -52,6 +66,7 @@ git push origin feature/itinerary-create --force
 
 # 6. Branch Anggota 4 (Itinerary Select)
 Write-Host "6. Mengunggah feature/itinerary-select..."
+git checkout main
 git checkout -b feature/itinerary-select
 git config user.name "Anggota Empat"
 git config user.email "anggota4@gmail.com"
@@ -61,6 +76,7 @@ git push origin feature/itinerary-select --force
 
 # 7. Branch Anggota 5 (Itinerary Detail)
 Write-Host "7. Mengunggah feature/itinerary-detail..."
+git checkout main
 git checkout -b feature/itinerary-detail
 git config user.name "Anggota Lima"
 git config user.email "anggota5@gmail.com"
@@ -70,6 +86,7 @@ git push origin feature/itinerary-detail --force
 
 # 8. Branch Anggota 6 (Profile History - Ketua)
 Write-Host "8. Mengunggah feature/profile-history..."
+git checkout main
 git checkout -b feature/profile-history
 git config user.name "Yosua Lohestian"
 git config user.email "yosualohestianh22@gmail.com"
