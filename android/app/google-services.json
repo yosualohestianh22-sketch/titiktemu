@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124756389738",
+    "project_id": "titiktemu-935d1",
+    "storage_bucket": "titiktemu-935d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124756389738:android:949eed36f594de870a3f13",
+        "android_client_info": {
+          "package_name": "com.example.titik_temu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQezgnApabjryEx8TxXcoV70dfu9tXd-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
