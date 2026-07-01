@@ -17,6 +17,9 @@ class SelectPlacesScreen extends StatefulWidget {
   final DateTime endDate;
   final double budget;
   final int travelersCount;
+  final int roomsCount;
+  final int adultsCount;
+  final int childrenCount;
 
   const SelectPlacesScreen({
     super.key,
@@ -26,6 +29,9 @@ class SelectPlacesScreen extends StatefulWidget {
     required this.endDate,
     required this.budget,
     required this.travelersCount,
+    required this.roomsCount,
+    required this.adultsCount,
+    required this.childrenCount,
   });
 
   @override
@@ -184,9 +190,8 @@ class _SelectPlacesScreenState extends State<SelectPlacesScreen>
                             'Rekomendasi Penginapan',
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Terdekat dari destinasi wisata Anda & sesuai budget',
+                           Text(
+                            'Terdekat untuk ${widget.roomsCount} Kamar, ${widget.adultsCount} Dewasa, ${widget.childrenCount} Anak',
                             style: TextStyle(fontSize: 11, color: Colors.grey[500]),
                           ),
                         ],
@@ -228,119 +233,171 @@ class _SelectPlacesScreenState extends State<SelectPlacesScreen>
                                 width: 1,
                               ),
                             ),
-                            child: Column(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Left Side: Hotel Image
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(16),
+                                    bottomLeft: Radius.circular(16),
+                                  ),
                                   child: Image.network(
                                     hotel.imageUrl,
-                                    height: 140,
-                                    width: double.infinity,
+                                    width: 110,
+                                    height: 145,
                                     fit: BoxFit.cover,
                                     errorBuilder: (c, o, s) => Container(
-                                      height: 140,
+                                      width: 110,
+                                      height: 145,
                                       color: Colors.grey[300],
-                                      child: const Icon(Icons.hotel, size: 40),
+                                      child: const Icon(Icons.hotel, size: 30),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              hotel.name,
-                                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.star, color: Colors.amber, size: 16),
-                                              const SizedBox(width: 4),
-                                              Text(
-                                                '${hotel.rating}',
-                                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.location_on, color: Colors.grey, size: 14),
-                                          const SizedBox(width: 4),
-                                          Expanded(
-                                            child: Text(
-                                              hotel.address,
-                                              style: TextStyle(color: Colors.grey[500], fontSize: 12),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 12),
-                                      const Divider(height: 1),
-                                      const SizedBox(height: 12),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Rp ${NumberFormat('#,###', 'id_ID').format(hotel.pricePerNight)} / malam',
-                                                style: TextStyle(
+                                
+                                // Right Side: Details
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        // Title and Star Rating
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                hotel.name,
+                                                style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14,
-                                                  color: themePrimary,
                                                 ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
-                                              const SizedBox(height: 2),
-                                              Text(
-                                                'Total $_tripDays malam: Rp ${NumberFormat('#,###', 'id_ID').format(hotel.pricePerNight * _tripDays)}',
-                                                style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: isWithinBudget ? Colors.green : Colors.red,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                              backgroundColor: isWithinBudget ? themePrimary : Colors.grey,
-                                              foregroundColor: isWithinBudget ? (isDark ? const Color(0xFF0F172A) : Colors.white) : Colors.white70,
                                             ),
-                                            onPressed: () {
-                                              Navigator.pop(ctx);
-                                              _submitItineraryToFirestore(hotel);
-                                            },
-                                            child: const Text('Pilih Hotel'),
+                                            const SizedBox(width: 4),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Icon(Icons.star, color: Colors.amber, size: 14),
+                                                const SizedBox(width: 2),
+                                                Text(
+                                                  '${hotel.rating}',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 11,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 4),
+
+                                        // Address/Location
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.location_on, color: Colors.grey, size: 12),
+                                            const SizedBox(width: 2),
+                                            Expanded(
+                                              child: Text(
+                                                hotel.address,
+                                                style: TextStyle(color: Colors.grey[500], fontSize: 11),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 6),
+
+                                        // Distance Badge
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue.withValues(alpha: 0.1),
+                                            borderRadius: BorderRadius.circular(6),
                                           ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue.withValues(alpha: 0.1),
-                                          borderRadius: BorderRadius.circular(8),
+                                          child: Text(
+                                            '📍 Jarak: ${distance.toStringAsFixed(1)} km dari pusat wisata',
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                         ),
-                                        child: Text(
-                                          '📍 Jarak: ${distance.toStringAsFixed(1)} km dari pusat destinasi wisata Anda',
-                                          style: const TextStyle(fontSize: 11, color: Colors.blue, fontWeight: FontWeight.bold),
+                                        const SizedBox(height: 8),
+                                        const Divider(height: 1),
+                                        const SizedBox(height: 8),
+
+                                        // Price and Choose Button
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Rp ${NumberFormat('#,###', 'id_ID').format(hotel.pricePerNight)} / malam',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 12,
+                                                      color: themePrimary,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                  const SizedBox(height: 1),
+                                                  Text(
+                                                    'Total $_tripDays malam: Rp ${NumberFormat('#,###', 'id_ID').format(hotel.pricePerNight * _tripDays)}',
+                                                    style: TextStyle(
+                                                      fontSize: 9,
+                                                      color: isWithinBudget ? Colors.green : Colors.red,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            SizedBox(
+                                              height: 32,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                  ),
+                                                  backgroundColor: isWithinBudget ? themePrimary : Colors.grey,
+                                                  foregroundColor: isWithinBudget
+                                                      ? (isDark ? const Color(0xFF0F172A) : Colors.white)
+                                                      : Colors.white70,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(ctx);
+                                                  _submitItineraryToFirestore(hotel);
+                                                },
+                                                child: const Text(
+                                                  'Pilih',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -394,6 +451,9 @@ class _SelectPlacesScreenState extends State<SelectPlacesScreen>
       createdAt: DateTime.now(),
       places: finalPlaces,
       travelersCount: widget.travelersCount,
+      roomsCount: widget.roomsCount,
+      adultsCount: widget.adultsCount,
+      childrenCount: widget.childrenCount,
       hotelName: selectedHotel?.name,
       hotelPrice: selectedHotel?.pricePerNight,
       hotelLatitude: selectedHotel?.latitude,

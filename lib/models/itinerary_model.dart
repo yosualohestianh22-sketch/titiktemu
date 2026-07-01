@@ -17,6 +17,9 @@ class ItineraryModel {
   final List<String> sharedWith;
   final String inviteCode;
   final int travelersCount;
+  final int roomsCount;
+  final int adultsCount;
+  final int childrenCount;
   final String? hotelName;
   final double? hotelPrice;
   final double? hotelLatitude;
@@ -39,6 +42,9 @@ class ItineraryModel {
     this.sharedWith = const [],
     this.inviteCode = '',
     this.travelersCount = 1,
+    this.roomsCount = 1,
+    this.adultsCount = 2,
+    this.childrenCount = 0,
     this.hotelName,
     this.hotelPrice,
     this.hotelLatitude,
@@ -67,6 +73,9 @@ class ItineraryModel {
       sharedWith: List<String>.from(data['sharedWith'] ?? []),
       inviteCode: data['inviteCode'] ?? '',
       travelersCount: data['travelersCount']?.toInt() ?? 1,
+      roomsCount: data['roomsCount']?.toInt() ?? 1,
+      adultsCount: data['adultsCount']?.toInt() ?? 2,
+      childrenCount: data['childrenCount']?.toInt() ?? 0,
       hotelName: data['hotelName'],
       hotelPrice: data['hotelPrice']?.toDouble(),
       hotelLatitude: data['hotelLatitude']?.toDouble(),
@@ -92,6 +101,9 @@ class ItineraryModel {
       'sharedWith': sharedWith,
       'inviteCode': inviteCode,
       'travelersCount': travelersCount,
+      'roomsCount': roomsCount,
+      'adultsCount': adultsCount,
+      'childrenCount': childrenCount,
       'hotelName': hotelName,
       'hotelPrice': hotelPrice,
       'hotelLatitude': hotelLatitude,

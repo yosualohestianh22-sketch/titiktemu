@@ -44,7 +44,10 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
 
   DateTime? _startDate;
   DateTime? _endDate;
-  int _travelersCount = 1;
+  int _travelersCount = 2; // Default 2 Dewasa
+  int _roomsCount = 1;
+  int _adultsCount = 2;
+  int _childrenCount = 0;
 
   // Warna tema utama (Vibrant & Glowing Indigo)
   static const _gradientStart = Color(0xFF818CF8);
@@ -128,6 +131,9 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
           endDate: _endDate!,
           budget: budget,
           travelersCount: _travelersCount,
+          roomsCount: _roomsCount,
+          adultsCount: _adultsCount,
+          childrenCount: _childrenCount,
         ),
       ),
     );
@@ -539,60 +545,64 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
               ),
             const SizedBox(height: 28),
 
-            // --- Jumlah Anggota Perjalanan ---
+            // --- Tamu & Kamar (Traveloka Style) ---
             const Text(
-              'Jumlah Anggota Perjalanan',
+              'Tamu & Kamar',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(5, (index) {
-                final count = index + 1;
-                final isSelected = _travelersCount == count;
-                final label = count == 5 ? '5+ Orang' : '$count Orang';
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _travelersCount = count;
-                        // Recalculate default/recommended budget if empty or preset
-                        final multiplier = _travelersCount;
-                        final recommendedValue = 1000000 * multiplier;
-                        _budgetController.text = NumberFormat('#,###', 'id_ID').format(recommendedValue);
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      margin: EdgeInsets.only(
-                        left: index == 0 ? 0 : 4,
-                        right: index == 4 ? 0 : 4,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color: isSelected ? themePrimary : Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: isSelected ? themePrimary : (isDark ? Colors.grey[850]! : Colors.grey[300]!),
-                          width: isSelected ? 2 : 1,
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          label,
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color: isSelected 
-                                ? (isDark ? Colors.deepPurple[900] : Colors.white)
-                                : (isDark ? Colors.grey[400] : Colors.grey[700]),
+            GestureDetector(
+              onTap: _showGuestRoomBottomSheet,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isDark ? Colors.grey[850]! : Colors.grey[300]!,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.people_outline_rounded,
+                      color: themePrimary,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Kapasitas & Jumlah Kamar',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: isDark ? Colors.grey[400] : Colors.grey[500],
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '$_roomsCount Kamar, $_adultsCount Dewasa, $_childrenCount Anak',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: isDark ? Colors.white : const Color(0xFF1E293B),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                );
-              }),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 16,
+                      color: isDark ? Colors.grey[600] : Colors.grey[400],
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 28),
 
@@ -755,6 +765,257 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
             const SizedBox(height: 24),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showGuestRoomBottomSheet() {
+    const travelokaOrange = Color(0xFFFF5E1F);
+
+    int tempRooms = _roomsCount;
+    int tempAdults = _adultsCount;
+    int tempChildren = _childrenCount;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              padding: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Blue Header
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF02A2E6), // Traveloka Blue
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Tambahkan Tamu & Kamar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close_rounded, color: Colors.white),
+                          onPressed: () => Navigator.pop(ctx),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  
+                  // Row Kamar
+                  _buildCounterRow(
+                    title: 'Kamar',
+                    subtitle: null,
+                    icon: Icons.meeting_room_rounded,
+                    value: tempRooms,
+                    onMinus: tempRooms > 1
+                        ? () => setModalState(() => tempRooms--)
+                        : null,
+                    onPlus: tempRooms < 10
+                        ? () => setModalState(() => tempRooms++)
+                        : null,
+                  ),
+                  const Divider(indent: 20, endIndent: 20, height: 24),
+
+                  // Row Dewasa
+                  _buildCounterRow(
+                    title: 'Dewasa',
+                    subtitle: null,
+                    icon: Icons.people_alt_rounded,
+                    value: tempAdults,
+                    onMinus: tempAdults > 1
+                        ? () => setModalState(() => tempAdults--)
+                        : null,
+                    onPlus: tempAdults < 30
+                        ? () => setModalState(() => tempAdults++)
+                        : null,
+                  ),
+                  const Divider(indent: 20, endIndent: 20, height: 24),
+
+                  // Row Anak
+                  _buildCounterRow(
+                    title: 'Anak',
+                    subtitle: 'Maksimal 17 tahun',
+                    icon: Icons.child_care_rounded,
+                    value: tempChildren,
+                    onMinus: tempChildren > 0
+                        ? () => setModalState(() => tempChildren--)
+                        : null,
+                    onPlus: tempChildren < 20
+                        ? () => setModalState(() => tempChildren++)
+                        : null,
+                  ),
+                  const SizedBox(height: 32),
+
+                  // Button Terapkan
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: travelokaOrange,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _roomsCount = tempRooms;
+                            _adultsCount = tempAdults;
+                            _childrenCount = tempChildren;
+                            _travelersCount = _adultsCount + _childrenCount;
+                            
+                            // Recalculate default/recommended budget if empty or preset
+                            final recommendedValue = 1000000 * _travelersCount;
+                            _budgetController.text = NumberFormat('#,###', 'id_ID').format(recommendedValue);
+                          });
+                          Navigator.pop(ctx);
+                        },
+                        child: const Text(
+                          'Terapkan',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildCounterRow({
+    required String title,
+    required String? subtitle,
+    required IconData icon,
+    required int value,
+    required VoidCallback? onMinus,
+    required VoidCallback? onPlus,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 24, color: isDark ? Colors.grey[300] : Colors.grey[700]),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                    ),
+                  ],
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              // Button Minus
+              GestureDetector(
+                onTap: onMinus,
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: onMinus != null
+                        ? (isDark ? const Color(0xFF1F1F35) : Colors.grey[100])
+                        : Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: onMinus != null
+                          ? const Color(0xFF02A2E6)
+                          : (isDark ? Colors.grey[800]! : Colors.grey[200]!),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.remove,
+                    size: 18,
+                    color: onMinus != null
+                        ? const Color(0xFF02A2E6)
+                        : (isDark ? Colors.grey[700] : Colors.grey[300]),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              SizedBox(
+                width: 24,
+                child: Center(
+                  child: Text(
+                    '$value',
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              // Button Plus
+              GestureDetector(
+                onTap: onPlus,
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: onPlus != null
+                        ? (isDark ? const Color(0xFF1F1F35) : Colors.grey[100])
+                        : Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: onPlus != null
+                          ? const Color(0xFF02A2E6)
+                          : (isDark ? Colors.grey[800]! : Colors.grey[200]!),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    size: 18,
+                    color: onPlus != null
+                        ? const Color(0xFF02A2E6)
+                        : (isDark ? Colors.grey[700] : Colors.grey[300]),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
