@@ -724,7 +724,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                                   _buildInfoRow(
                                     Icons.hotel_rounded,
                                     'Penginapan (Hotel)',
-                                    '${itinerary.hotelName} (Rp ${_formatNumber(itinerary.hotelPrice ?? 0)} / malam)',
+                                    '${itinerary.hotelName} (${_formatNumber(itinerary.hotelPrice ?? 0)} / malam)',
                                     themePrimary,
                                   ),
                                 ],
@@ -1258,23 +1258,25 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
           child: Icon(icon, color: primaryColor, size: 22),
         ),
         const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                color: isDark ? Colors.grey[400] : Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? Colors.grey[400] : Colors.grey.shade600,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-            ),
-          ],
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
         ),
       ],
     );
