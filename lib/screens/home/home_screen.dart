@@ -163,7 +163,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Biar AI yang menyusun rute terbaik\nuntuk liburanmu selanjutnya!',
+                          'Biar kami yang merekomendasikan rute terbaik\nuntuk liburanmu selanjutnya!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.85),
