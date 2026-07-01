@@ -22,7 +22,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.7926,
     longitude: 110.3658,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1570701140010-09e45be0f8f8?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1596494848484-905a673771fd?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_3',
@@ -33,7 +33,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.7816,
     longitude: 110.4986,
     price: 10000,
-    imageUrl: 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_4',
@@ -44,7 +44,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.0253,
     longitude: 110.3323,
     price: 10000,
-    imageUrl: 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_5',
@@ -55,7 +55,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.8053,
     longitude: 110.3642,
     price: 15000,
-    imageUrl: 'https://images.unsplash.com/photo-1601999109332-542b18dbec57?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_6',
@@ -66,7 +66,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.8100,
     longitude: 110.3589,
     price: 15000,
-    imageUrl: 'https://images.unsplash.com/photo-1541088648397-d2f1d933cc50?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_7',
@@ -77,7 +77,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.7705,
     longitude: 110.4894,
     price: 40000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1626125345510-4603468eedfb?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_8',
@@ -88,7 +88,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.8488,
     longitude: 110.4789,
     price: 20000,
-    imageUrl: 'https://images.unsplash.com/photo-1588668214407-6eb952709904?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_9',
@@ -132,7 +132,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.9158,
     longitude: 110.4354,
     price: 5000,
-    imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_13',
@@ -165,7 +165,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.8436,
     longitude: 110.4812,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_16',
@@ -176,7 +176,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.6084,
     longitude: 110.4436,
     price: 250000,
-    imageUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'yog_17',
@@ -208,7 +208,7 @@ final List<PlaceModel> mockPlaces = [
     description: 'Susur goa menggunakan ban pelampung menyusuri sungai bawah tanah.',
     latitude: -7.9332,
     longitude: 110.6482,
-    price: 45000,
+    price: 45005,
     imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
@@ -277,7 +277,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.8104,
     longitude: 115.1676,
     price: 125000,
-    imageUrl: 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bali_6',
@@ -365,7 +365,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.4264,
     longitude: 115.2894,
     price: 50000,
-    imageUrl: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bali_14',
@@ -376,7 +376,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.5234,
     longitude: 115.2872,
     price: 30000,
-    imageUrl: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bali_15',
@@ -387,7 +387,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.6752,
     longitude: 115.2635,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bali_16',
@@ -431,7 +431,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.7824,
     longitude: 115.1632,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bali_20',
@@ -499,7 +499,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.1702,
     longitude: 106.8314,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1604999109332-542b18dbec57?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1555555555-5f335b1d5a71?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'jkt_6',
@@ -532,7 +532,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.1696,
     longitude: 106.8332,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1555555555-5f335b1d5a71?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'jkt_9',
@@ -543,7 +543,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.1264,
     longitude: 106.8424,
     price: 110000,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'jkt_10',
@@ -565,7 +565,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.1352,
     longitude: 106.8134,
     price: 5000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'jkt_12',
@@ -598,7 +598,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.1624,
     longitude: 106.8322,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1596494848484-905a673771fd?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'jkt_15',
@@ -710,7 +710,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.8162,
     longitude: 107.6185,
     price: 30000,
-    imageUrl: 'https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bdg_5',
@@ -765,7 +765,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.9024,
     longitude: 107.6186,
     price: 5000,
-    imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bdg_10',
@@ -798,7 +798,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.7894,
     longitude: 107.5794,
     price: 50000,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bdg_13',
@@ -886,7 +886,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -6.8482,
     longitude: 107.6258,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
 
   // === LOMBOK ===
@@ -910,7 +910,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.4111,
     longitude: 116.4578,
     price: 150000,
-    imageUrl: 'https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'lombok_3',
@@ -943,7 +943,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.7425,
     longitude: 116.5925,
     price: 20000,
-    imageUrl: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'lombok_6',
@@ -976,7 +976,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.3582,
     longitude: 116.0824,
     price: 20000,
-    imageUrl: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'lombok_9',
@@ -1132,7 +1132,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.2652,
     longitude: 112.7505,
     price: 15000,
-    imageUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1554009975-d74653b879f1?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_3',
@@ -1143,7 +1143,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.2308,
     longitude: 112.7342,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_4',
@@ -1154,7 +1154,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.2458,
     longitude: 112.7378,
     price: 5000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1555555555-5f335b1d5a71?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_5',
@@ -1165,7 +1165,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.3364,
     longitude: 112.7149,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1604999109332-542b18dbec57?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1555555555-5f335b1d5a71?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_6',
@@ -1220,7 +1220,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.2464,
     longitude: 112.6514,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_11',
@@ -1264,7 +1264,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.2562,
     longitude: 112.7362,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_15',
@@ -1319,7 +1319,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -7.2452,
     longitude: 112.7382,
     price: 8000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'sby_20',
@@ -1409,7 +1409,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.5824,
     longitude: 119.5012,
     price: 100000,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'lbj_8',
@@ -1475,7 +1475,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.4364,
     longitude: 119.7424,
     price: 30000,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'lbj_14',
@@ -1552,7 +1552,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -8.5322,
     longitude: 120.4432,
     price: 20000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
 
   // === BORNEO ===
@@ -1620,7 +1620,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: 2.2612,
     longitude: 118.4012,
     price: 30000,
-    imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bor_7',
@@ -1752,7 +1752,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -0.0212,
     longitude: 109.3424,
     price: 10000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'bor_19',
@@ -1798,7 +1798,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -5.1332,
     longitude: 119.4052,
     price: 10000,
-    imageUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'mks_3',
@@ -1864,7 +1864,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -5.1912,
     longitude: 119.4124,
     price: 5000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'mks_9',
@@ -1875,7 +1875,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -5.1312,
     longitude: 119.4224,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1604999109332-542b18dbec57?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'mks_10',
@@ -1897,7 +1897,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -5.1482,
     longitude: 119.4064,
     price: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1604999109332-542b18dbec57?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'mks_12',
@@ -1974,7 +1974,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -5.2024,
     longitude: 119.4508,
     price: 10000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1518971868884-88488846c26?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'mks_19',
@@ -1985,7 +1985,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -5.0212,
     longitude: 119.0324,
     price: 50000,
-    imageUrl: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'mks_20',
@@ -2174,7 +2174,7 @@ final List<PlaceModel> mockPlaces = [
     latitude: -1.9052,
     longitude: 130.2224,
     price: 50000,
-    imageUrl: 'https://images.unsplash.com/photo-1605371924599-2c03b5dbae30?w=400&auto=format&fit=crop&q=60',
+    imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&auto=format&fit=crop&q=60',
   ),
   PlaceModel(
     id: 'rja_17',
