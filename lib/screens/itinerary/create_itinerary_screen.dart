@@ -740,7 +740,7 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'LANJUT PILIH TEMPAT',
+                            'Lanjut Pilih Tempat',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w800,

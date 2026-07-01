@@ -45,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
         children: [
           // Section: Tampilan
           Text(
-            'TAMPILAN',
+            'Tampilan',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class SettingsScreen extends StatelessWidget {
 
           // Section: Tentang Aplikasi
           Text(
-            'TENTANG',
+            'Tentang',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,

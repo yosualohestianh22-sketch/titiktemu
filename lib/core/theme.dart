@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // Warna Utama Light Theme (Vibrant Indigo)
@@ -30,6 +31,12 @@ class AppTheme {
         surface: backgroundColor,
         onSurface: textColor,
         brightness: Brightness.light,
+      ),
+      textTheme: GoogleFonts.poppinsTextTheme(
+        ThemeData.light().textTheme.apply(
+          bodyColor: textColor,
+          displayColor: textColor,
+        ),
       ),
       scaffoldBackgroundColor: const Color(0xFFF9FAFB), // Background abu-abu muda bersih
       cardColor: backgroundColor,
@@ -90,6 +97,12 @@ class AppTheme {
         surface: darkSurfaceColor,
         onSurface: darkTextColor,
         brightness: Brightness.dark,
+      ),
+      textTheme: GoogleFonts.poppinsTextTheme(
+        ThemeData.dark().textTheme.apply(
+          bodyColor: darkTextColor,
+          displayColor: darkTextColor,
+        ),
       ),
       scaffoldBackgroundColor: darkBackgroundColor,
       cardColor: darkSurfaceColor,

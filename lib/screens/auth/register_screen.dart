@@ -131,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             )
                           : const Text(
-                              'DAFTAR',
+                              'Daftar',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                     );
