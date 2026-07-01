@@ -20,9 +20,7 @@ class HistoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Semua Riwayat Perjalanan',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -45,11 +43,18 @@ class HistoryScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.history_rounded, size: 64, color: isDark ? Colors.grey[750] : Colors.grey[300]),
+                        Icon(
+                          Icons.history_rounded,
+                          size: 64,
+                          color: isDark ? Colors.grey[750] : Colors.grey[300],
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           'Riwayat kosong.',
-                          style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500], fontSize: 16),
+                          style: TextStyle(
+                            color: isDark ? Colors.grey[400] : Colors.grey[500],
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),
@@ -72,15 +77,23 @@ class HistoryScreen extends StatelessWidget {
                         ),
                         alignment: Alignment.centerRight,
                         padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: const Icon(Icons.delete_outline, color: Colors.white, size: 32),
+                        child: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.white,
+                          size: 32,
+                        ),
                       ),
                       confirmDismiss: (direction) async {
                         return await showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
                             title: const Text('Hapus Riwayat?'),
-                            content: const Text('Apakah Anda yakin ingin menghapus perjalanan ini? Tindakan ini tidak dapat dibatalkan.'),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            content: const Text(
+                              'Apakah Anda yakin ingin menghapus perjalanan ini? Tindakan ini tidak dapat dibatalkan.',
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context, false),
@@ -99,16 +112,25 @@ class HistoryScreen extends StatelessWidget {
                         );
                       },
                       onDismissed: (direction) async {
-                        final provider = Provider.of<ItineraryProvider>(context, listen: false);
-                        final success = await provider.deleteItinerary(itinerary.id);
+                        final provider = Provider.of<ItineraryProvider>(
+                          context,
+                          listen: false,
+                        );
+                        final success = await provider.deleteItinerary(
+                          itinerary.id,
+                        );
                         if (!context.mounted) return;
                         if (success) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Riwayat berhasil dihapus.')),
+                            const SnackBar(
+                              content: Text('Riwayat berhasil dihapus.'),
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Gagal menghapus riwayat.')),
+                            const SnackBar(
+                              content: Text('Gagal menghapus riwayat.'),
+                            ),
                           );
                         }
                       },
@@ -118,12 +140,16 @@ class HistoryScreen extends StatelessWidget {
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: isDark ? Colors.grey[850]! : Colors.transparent,
+                            color: isDark
+                                ? Colors.grey[850]!
+                                : Colors.transparent,
                             width: 1,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.03),
+                              color: Colors.black.withValues(
+                                alpha: isDark ? 0.15 : 0.03,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(0, 4),
                             ),
@@ -151,12 +177,19 @@ class HistoryScreen extends StatelessWidget {
                                     width: 60,
                                     height: 60,
                                     decoration: BoxDecoration(
-                                      color: isDark ? Theme.of(context).primaryColor.withValues(alpha: 0.15) : const Color(0xFFF3E5F5), // Ungu sangat muda
+                                      color: isDark
+                                          ? Theme.of(context).primaryColor
+                                                .withValues(alpha: 0.15)
+                                          : const Color(
+                                              0xFFF3E5F5,
+                                            ), // Ungu sangat muda
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Icon(
                                       Icons.map_rounded,
-                                      color: isDark ? Theme.of(context).primaryColor : const Color(0xFF8E2DE2),
+                                      color: isDark
+                                          ? Theme.of(context).primaryColor
+                                          : const Color(0xFF8E2DE2),
                                       size: 32,
                                     ),
                                   ),
@@ -164,7 +197,8 @@ class HistoryScreen extends StatelessWidget {
                                   // Detail Teks
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           children: [
@@ -182,23 +216,39 @@ class HistoryScreen extends StatelessWidget {
                                             if (itinerary.isCompleted) ...[
                                               const SizedBox(width: 8),
                                               Container(
-                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 2,
+                                                    ),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.green.withValues(alpha: 0.15),
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  border: Border.all(color: Colors.green, width: 1),
+                                                  color: Colors.green
+                                                      .withValues(alpha: 0.15),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  border: Border.all(
+                                                    color: Colors.green,
+                                                    width: 1,
+                                                  ),
                                                 ),
                                                 child: const Row(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
-                                                    Icon(Icons.check_circle_rounded, color: Colors.green, size: 10),
+                                                    Icon(
+                                                      Icons
+                                                          .check_circle_rounded,
+                                                      color: Colors.green,
+                                                      size: 10,
+                                                    ),
                                                     SizedBox(width: 4),
                                                     Text(
                                                       'Selesai',
                                                       style: TextStyle(
                                                         color: Colors.green,
                                                         fontSize: 10,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                   ],
@@ -212,7 +262,9 @@ class HistoryScreen extends StatelessWidget {
                                           '${itinerary.city} • ${DateFormat('dd MMM').format(itinerary.startDate)} - ${DateFormat('dd MMM').format(itinerary.endDate)}',
                                           style: TextStyle(
                                             fontSize: 13,
-                                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                            color: isDark
+                                                ? Colors.grey[400]
+                                                : Colors.grey[600],
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -220,13 +272,19 @@ class HistoryScreen extends StatelessWidget {
                                         // Info Jam Pembuatan
                                         Row(
                                           children: [
-                                            Icon(Icons.access_time_rounded, size: 12, color: Colors.grey[400]),
+                                            Icon(
+                                              Icons.access_time_rounded,
+                                              size: 12,
+                                              color: Colors.grey[400],
+                                            ),
                                             const SizedBox(width: 4),
                                             Text(
                                               'Dibuat: ${DateFormat('dd MMM yyyy, HH:mm').format(itinerary.createdAt)}',
                                               style: TextStyle(
                                                 fontSize: 11,
-                                                color: isDark ? Colors.grey[400] : Colors.grey[500],
+                                                color: isDark
+                                                    ? Colors.grey[400]
+                                                    : Colors.grey[500],
                                                 fontStyle: FontStyle.italic,
                                               ),
                                             ),

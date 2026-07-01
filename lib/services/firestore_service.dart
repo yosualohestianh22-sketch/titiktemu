@@ -11,7 +11,10 @@ class FirestoreService {
   String _generateInviteCode() {
     final rand = Random();
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    return List.generate(6, (index) => chars[rand.nextInt(chars.length)]).join();
+    return List.generate(
+      6,
+      (index) => chars[rand.nextInt(chars.length)],
+    ).join();
   }
 
   // 1. Fungsi Create: Membuat jadwal baru dengan kode undangan & sharedWith
@@ -21,7 +24,7 @@ class FirestoreService {
       final data = itinerary.toMap();
       data['inviteCode'] = code;
       data['sharedWith'] = [itinerary.ownerId];
-      
+
       await _db.collection(collectionName).add(data);
     } catch (e) {
       throw Exception('Gagal menyimpan jadwal: $e');
@@ -65,16 +68,12 @@ class FirestoreService {
 
   // 5. Fungsi Stream: Mengambil detail itinerary tertentu secara Realtime
   Stream<ItineraryModel> getItineraryStream(String docId) {
-    return _db
-        .collection(collectionName)
-        .doc(docId)
-        .snapshots()
-        .map((doc) {
-          if (!doc.exists) {
-            throw Exception('Jadwal tidak ditemukan');
-          }
-          return ItineraryModel.fromMap(doc.data()!, doc.id);
-        });
+    return _db.collection(collectionName).doc(docId).snapshots().map((doc) {
+      if (!doc.exists) {
+        throw Exception('Jadwal tidak ditemukan');
+      }
+      return ItineraryModel.fromMap(doc.data()!, doc.id);
+    });
   }
 
   // 6. Fungsi Join: Gabung ke itinerary menggunakan kode undangan alfanumerik
@@ -101,7 +100,7 @@ class FirestoreService {
 
       sharedWith.add(userId);
       await doc.reference.update({'sharedWith': sharedWith});
-      
+
       return itineraryData['title'] ?? 'Perjalanan';
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
@@ -109,7 +108,9 @@ class FirestoreService {
   }
 
   // 7. Stream Profiles: Mengambil data profil kolaborator secara realtime
-  Stream<List<Map<String, dynamic>>> getCollaboratorsProfiles(List<String> uids) {
+  Stream<List<Map<String, dynamic>>> getCollaboratorsProfiles(
+    List<String> uids,
+  ) {
     if (uids.isEmpty) {
       return Stream.value([]);
     }

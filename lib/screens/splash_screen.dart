@@ -15,9 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Tunggu 3 detik, lalu pindah ke halaman Login
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginScreen()));
     });
   }
 
@@ -48,10 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
             // Slogan
             Text(
               'Pembuat Itinerary Wisata Kota',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
             const SizedBox(height: 48),
             // Indikator Loading

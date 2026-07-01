@@ -16,7 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true; // Untuk toggle lihat/sembunyikan password
 
-
   Future<void> _login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -33,9 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (success) {
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
     } else {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -58,7 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Masukkan email yang terdaftar untuk menerima link reset password.'),
+              const Text(
+                'Masukkan email yang terdaftar untuk menerima link reset password.',
+              ),
               const SizedBox(height: 16),
               TextField(
                 controller: resetEmailController,
@@ -84,14 +85,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                   return;
                 }
-                
+
                 Navigator.pop(context); // Close dialog
                 final authProvider = context.read<AuthProvider>();
                 final success = await authProvider.resetPassword(email);
-                
+
                 if (success && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Email reset password telah dikirim!')),
+                    const SnackBar(
+                      content: Text('Email reset password telah dikirim!'),
+                    ),
                   );
                 } else if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -110,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryThemeColor = isDark ? Theme.of(context).primaryColor : const Color(0xFF6A1B9A);
+    final primaryThemeColor = isDark
+        ? Theme.of(context).primaryColor
+        : const Color(0xFF6A1B9A);
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -121,7 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
             height: MediaQuery.of(context).size.height * 0.45,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF6A1B9A), Color(0xFFCBC3E3)], // Gradien Ungu Tua ke Ungu Pastel
+                colors: [
+                  Color(0xFF6A1B9A),
+                  Color(0xFFCBC3E3),
+                ], // Gradien Ungu Tua ke Ungu Pastel
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -146,7 +154,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.15),
+                            color: Colors.black.withValues(
+                              alpha: isDark ? 0.3 : 0.15,
+                            ),
                             blurRadius: 15,
                             offset: const Offset(0, 8),
                           ),
@@ -189,13 +199,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       'Masuk untuk merencanakan liburanmu',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
                     ),
                     const SizedBox(height: 32),
-                    
+
                     // Card Putih Melayang untuk Form Login
                     Container(
                       padding: const EdgeInsets.all(24),
@@ -203,12 +210,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(
-                          color: isDark ? Colors.grey[850]! : Colors.transparent,
+                          color: isDark
+                              ? Colors.grey[850]!
+                              : Colors.transparent,
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.08),
+                            color: Colors.black.withValues(
+                              alpha: isDark ? 0.2 : 0.08,
+                            ),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                           ),
@@ -223,36 +234,49 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
                               fontSize: 15,
-                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                             decoration: InputDecoration(
                               labelText: 'Email',
                               prefixIcon: const Icon(Icons.email_outlined),
                               filled: true,
-                              fillColor: isDark ? const Color(0xFF161622) : Colors.grey[50],
+                              fillColor: isDark
+                                  ? const Color(0xFF161622)
+                                  : Colors.grey[50],
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide.none,
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide(color: isDark ? Colors.grey[850]! : Colors.grey[200]!),
+                                borderSide: BorderSide(
+                                  color: isDark
+                                      ? Colors.grey[850]!
+                                      : Colors.grey[200]!,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide(color: primaryThemeColor, width: 2),
+                                borderSide: BorderSide(
+                                  color: primaryThemeColor,
+                                  width: 2,
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 20),
-                          
+
                           // Form Password
                           TextField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
                             style: TextStyle(
                               fontSize: 15,
-                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                             decoration: InputDecoration(
                               labelText: 'Password',
@@ -262,7 +286,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _obscurePassword
                                       ? Icons.visibility_off_outlined
                                       : Icons.visibility_outlined,
-                                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                  color: isDark
+                                      ? Colors.grey[400]
+                                      : Colors.grey[600],
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -271,22 +297,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                               ),
                               filled: true,
-                              fillColor: isDark ? const Color(0xFF161622) : Colors.grey[50],
+                              fillColor: isDark
+                                  ? const Color(0xFF161622)
+                                  : Colors.grey[50],
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide.none,
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide(color: isDark ? Colors.grey[850]! : Colors.grey[200]!),
+                                borderSide: BorderSide(
+                                  color: isDark
+                                      ? Colors.grey[850]!
+                                      : Colors.grey[200]!,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide(color: primaryThemeColor, width: 2),
+                                borderSide: BorderSide(
+                                  color: primaryThemeColor,
+                                  width: 2,
+                                ),
                               ),
                             ),
                           ),
-                          
+
                           // Lupa Password
                           Align(
                             alignment: Alignment.centerRight,
@@ -299,20 +334,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          
+
                           // Tombol Login
                           Consumer<AuthProvider>(
                             builder: (context, auth, child) {
                               return ElevatedButton(
                                 onPressed: auth.isLoading ? null : _login,
                                 style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   elevation: 4,
                                   backgroundColor: primaryThemeColor,
-                                  foregroundColor: isDark ? Colors.deepPurple[900] : Colors.white,
+                                  foregroundColor: isDark
+                                      ? Colors.deepPurple[900]
+                                      : Colors.white,
                                 ),
                                 child: auth.isLoading
                                     ? SizedBox(
@@ -320,7 +359,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: 24,
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
-                                          color: isDark ? Colors.deepPurple[900] : Colors.white,
+                                          color: isDark
+                                              ? Colors.deepPurple[900]
+                                              : Colors.white,
                                         ),
                                       )
                                     : const Text(
@@ -335,24 +376,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           const SizedBox(height: 24),
-                          
+
                           // Navigasi ke Daftar
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 'Belum punya akun?',
-                                style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[600]),
+                                style: TextStyle(
+                                  color: isDark
+                                      ? Colors.grey[400]
+                                      : Colors.grey[600],
+                                ),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).push(
-                                    MaterialPageRoute(builder: (_) => const RegisterScreen()),
+                                    MaterialPageRoute(
+                                      builder: (_) => const RegisterScreen(),
+                                    ),
                                   );
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: primaryThemeColor,
-                                  textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                                  textStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 child: const Text('Daftar Sekarang'),
                               ),

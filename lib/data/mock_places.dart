@@ -449,7 +449,8 @@ final List<PlaceModel> mockPlaces = [
     name: 'Masjid Istiqlal',
     city: 'Jakarta',
     category: 'Religi',
-    description: 'Masjid terbesar di Asia Tenggara yang berseberangan dgn Katedral.',
+    description:
+        'Masjid terbesar di Asia Tenggara yang berseberangan dgn Katedral.',
     latitude: -6.1702,
     longitude: 106.8314,
     price: 0,
@@ -793,7 +794,8 @@ final List<PlaceModel> mockPlaces = [
     name: 'Pantai Kuta Mandalika',
     city: 'Lombok',
     category: 'Alam',
-    description: 'Pantai berpasir merica dengan ombak selancar di kawasan sirkuit.',
+    description:
+        'Pantai berpasir merica dengan ombak selancar di kawasan sirkuit.',
     latitude: -8.8920,
     longitude: 116.2801,
     price: 10000,

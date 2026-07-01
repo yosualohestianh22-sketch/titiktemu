@@ -4,7 +4,7 @@ import 'package:titik_temu/services/firestore_service.dart';
 
 class ItineraryProvider with ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
-  
+
   bool _isLoading = false;
   String _errorMessage = '';
 
@@ -25,7 +25,7 @@ class ItineraryProvider with ChangeNotifier {
   Future<bool> createItinerary(ItineraryModel itinerary) async {
     _setLoading(true);
     _errorMessage = '';
-    
+
     try {
       await _firestoreService.createItinerary(itinerary);
       _setLoading(false);
@@ -64,7 +64,10 @@ class ItineraryProvider with ChangeNotifier {
     _setLoading(true);
     _errorMessage = '';
     try {
-      final tripTitle = await _firestoreService.joinItineraryWithCode(code, userId);
+      final tripTitle = await _firestoreService.joinItineraryWithCode(
+        code,
+        userId,
+      );
       _setLoading(false);
       return tripTitle;
     } catch (e) {
@@ -85,7 +88,9 @@ class ItineraryProvider with ChangeNotifier {
   }
 
   // Mengambil stream profil kolaborator berdasarkan daftar UID secara realtime
-  Stream<List<Map<String, dynamic>>> getCollaboratorsProfilesStream(List<String> uids) {
+  Stream<List<Map<String, dynamic>>> getCollaboratorsProfilesStream(
+    List<String> uids,
+  ) {
     return _firestoreService.getCollaboratorsProfiles(uids);
   }
 }

@@ -28,7 +28,9 @@ class HomeScreen extends StatelessWidget {
         title: Text(
           'TitikTemu',
           style: TextStyle(
-            color: isDark ? Theme.of(context).primaryColor : const Color(0xFF6A1B9A),
+            color: isDark
+                ? Theme.of(context).primaryColor
+                : const Color(0xFF6A1B9A),
             fontWeight: FontWeight.w900,
             letterSpacing: 1.2,
             fontSize: 24,
@@ -57,9 +59,16 @@ class HomeScreen extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: Theme.of(context).cardColor,
                 radius: 20,
-                backgroundImage: user?.photoURL != null ? NetworkImage(user!.photoURL!) : null,
+                backgroundImage: user?.photoURL != null
+                    ? NetworkImage(user!.photoURL!)
+                    : null,
                 child: user?.photoURL == null
-                    ? Icon(Icons.person, color: isDark ? Theme.of(context).primaryColor : const Color(0xFF6A1B9A))
+                    ? Icon(
+                        Icons.person,
+                        color: isDark
+                            ? Theme.of(context).primaryColor
+                            : const Color(0xFF6A1B9A),
+                      )
                     : null,
               ),
             ),
@@ -90,19 +99,24 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             // --- Section: Kartu Utama (Call to Action) ---
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF8E2DE2), Color(0xFF4A00E0)], // Gradien modern ungu biru
+                  colors: [
+                    Color(0xFF8E2DE2),
+                    Color(0xFF4A00E0),
+                  ], // Gradien modern ungu biru
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF4A00E0).withValues(alpha: isDark ? 0.5 : 0.3),
+                    color: const Color(
+                      0xFF4A00E0,
+                    ).withValues(alpha: isDark ? 0.5 : 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
@@ -114,7 +128,9 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const CreateItineraryScreen()),
+                      MaterialPageRoute(
+                        builder: (_) => const CreateItineraryScreen(),
+                      ),
                     );
                   },
                   borderRadius: BorderRadius.circular(24),
@@ -170,44 +186,54 @@ class HomeScreen extends StatelessWidget {
                     icon: const Icon(Icons.group_add_rounded),
                     label: const Text('Gabung via Kode'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: isDark ? Theme.of(context).primaryColor : const Color(0xFF6A1B9A),
-                      side: BorderSide(color: isDark ? Theme.of(context).primaryColor : const Color(0xFF6A1B9A), width: 1.5),
+                      foregroundColor: isDark
+                          ? Theme.of(context).primaryColor
+                          : const Color(0xFF6A1B9A),
+                      side: BorderSide(
+                        color: isDark
+                            ? Theme.of(context).primaryColor
+                            : const Color(0xFF6A1B9A),
+                        width: 1.5,
+                      ),
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 28),
-            
+
             // --- Section: Header Riwayat ---
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   'Riwayat Perjalanan',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HistoryScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const HistoryScreen(),
+                      ),
                     );
                   },
                   style: TextButton.styleFrom(
-                    foregroundColor: isDark ? Theme.of(context).primaryColor : const Color(0xFF6A1B9A),
+                    foregroundColor: isDark
+                        ? Theme.of(context).primaryColor
+                        : const Color(0xFF6A1B9A),
                   ),
                   child: const Text('Lihat Semua'),
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            
+
             // --- Section: List Riwayat ---
             if (user != null)
               StreamBuilder<List<ItineraryModel>>(
@@ -219,30 +245,38 @@ class HomeScreen extends StatelessWidget {
                       child: Center(child: CircularProgressIndicator()),
                     );
                   }
- 
+
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
- 
+
                   final itineraries = snapshot.data;
- 
+
                   if (itineraries == null || itineraries.isEmpty) {
                     return Container(
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: isDark ? Colors.grey[850]! : Colors.grey[200]!),
+                        border: Border.all(
+                          color: isDark ? Colors.grey[850]! : Colors.grey[200]!,
+                        ),
                       ),
                       child: Column(
                         children: [
-                          Icon(Icons.flight_takeoff_rounded, size: 64, color: isDark ? Colors.grey[750] : Colors.grey[300]),
+                          Icon(
+                            Icons.flight_takeoff_rounded,
+                            size: 64,
+                            color: isDark ? Colors.grey[750] : Colors.grey[300],
+                          ),
                           const SizedBox(height: 16),
                           Text(
                             'Belum ada perjalanan.\nYuk mulai rencanakan sekarang!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: isDark ? Colors.grey[400] : Colors.grey[500],
+                              color: isDark
+                                  ? Colors.grey[400]
+                                  : Colors.grey[500],
                               fontSize: 15,
                             ),
                           ),
@@ -250,10 +284,12 @@ class HomeScreen extends StatelessWidget {
                       ),
                     );
                   }
- 
+
                   // Batasi hanya menampilkan 3 item terbaru di Beranda
-                  final displayCount = itineraries.length > 3 ? 3 : itineraries.length;
- 
+                  final displayCount = itineraries.length > 3
+                      ? 3
+                      : itineraries.length;
+
                   // Tampilkan daftar perjalanan
                   return ListView.builder(
                     shrinkWrap: true,
@@ -267,12 +303,16 @@ class HomeScreen extends StatelessWidget {
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: isDark ? Colors.grey[850]! : Colors.transparent,
+                            color: isDark
+                                ? Colors.grey[850]!
+                                : Colors.transparent,
                             width: 1,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.03),
+                              color: Colors.black.withValues(
+                                alpha: isDark ? 0.15 : 0.03,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(0, 4),
                             ),
@@ -300,12 +340,19 @@ class HomeScreen extends StatelessWidget {
                                     width: 60,
                                     height: 60,
                                     decoration: BoxDecoration(
-                                      color: isDark ? Theme.of(context).primaryColor.withValues(alpha: 0.15) : const Color(0xFFF3E5F5), // Ungu sangat muda
+                                      color: isDark
+                                          ? Theme.of(context).primaryColor
+                                                .withValues(alpha: 0.15)
+                                          : const Color(
+                                              0xFFF3E5F5,
+                                            ), // Ungu sangat muda
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Icon(
                                       Icons.location_city_rounded,
-                                      color: isDark ? Theme.of(context).primaryColor : const Color(0xFF8E2DE2),
+                                      color: isDark
+                                          ? Theme.of(context).primaryColor
+                                          : const Color(0xFF8E2DE2),
                                       size: 32,
                                     ),
                                   ),
@@ -313,7 +360,8 @@ class HomeScreen extends StatelessWidget {
                                   // Detail Teks
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           children: [
@@ -331,23 +379,39 @@ class HomeScreen extends StatelessWidget {
                                             if (itinerary.isCompleted) ...[
                                               const SizedBox(width: 8),
                                               Container(
-                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 2,
+                                                    ),
                                                 decoration: BoxDecoration(
-                                                  color: Colors.green.withValues(alpha: 0.15),
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  border: Border.all(color: Colors.green, width: 1),
+                                                  color: Colors.green
+                                                      .withValues(alpha: 0.15),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  border: Border.all(
+                                                    color: Colors.green,
+                                                    width: 1,
+                                                  ),
                                                 ),
                                                 child: const Row(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
-                                                    Icon(Icons.check_circle_rounded, color: Colors.green, size: 10),
+                                                    Icon(
+                                                      Icons
+                                                          .check_circle_rounded,
+                                                      color: Colors.green,
+                                                      size: 10,
+                                                    ),
                                                     SizedBox(width: 4),
                                                     Text(
                                                       'Selesai',
                                                       style: TextStyle(
                                                         color: Colors.green,
                                                         fontSize: 10,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                   ],
@@ -361,7 +425,9 @@ class HomeScreen extends StatelessWidget {
                                           '${itinerary.city} • ${DateFormat('dd MMM').format(itinerary.startDate)} - ${DateFormat('dd MMM').format(itinerary.endDate)}',
                                           style: TextStyle(
                                             fontSize: 13,
-                                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                            color: isDark
+                                                ? Colors.grey[400]
+                                                : Colors.grey[600],
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -404,12 +470,17 @@ class HomeScreen extends StatelessWidget {
           builder: (context, setDialogState) {
             return AlertDialog(
               backgroundColor: Theme.of(context).cardColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
               title: const Row(
                 children: [
                   Icon(Icons.group_add_rounded, color: Colors.green),
                   SizedBox(width: 10),
-                  Text('Gabung Perjalanan', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    'Gabung Perjalanan',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
               content: Column(
@@ -434,7 +505,10 @@ class HomeScreen extends StatelessWidget {
                     textCapitalization: TextCapitalization.characters,
                     decoration: InputDecoration(
                       hintText: 'CONTOH',
-                      hintStyle: TextStyle(color: Colors.grey[400], letterSpacing: 4.0),
+                      hintStyle: TextStyle(
+                        color: Colors.grey[400],
+                        letterSpacing: 4.0,
+                      ),
                       counterText: '',
                       filled: true,
                       fillColor: isDark ? Colors.grey[900] : Colors.grey[100],
@@ -455,7 +529,9 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     'Batal',
-                    style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[600]),
+                    style: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    ),
                   ),
                 ),
                 ElevatedButton(
@@ -466,7 +542,11 @@ class HomeScreen extends StatelessWidget {
                           final user = authProvider.currentUser;
                           if (code.length != 6) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Kode harus terdiri dari 6 karakter')),
+                              const SnackBar(
+                                content: Text(
+                                  'Kode harus terdiri dari 6 karakter',
+                                ),
+                              ),
                             );
                             return;
                           }
@@ -474,14 +554,17 @@ class HomeScreen extends StatelessWidget {
 
                           setDialogState(() {});
 
-                          final tripTitle = await itineraryProvider.joinItineraryWithCode(code, user.uid);
+                          final tripTitle = await itineraryProvider
+                              .joinItineraryWithCode(code, user.uid);
 
                           if (context.mounted) {
                             if (tripTitle != null) {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Berhasil bergabung ke perjalanan "$tripTitle"! 🎉'),
+                                  content: Text(
+                                    'Berhasil bergabung ke perjalanan "$tripTitle"! 🎉',
+                                  ),
                                   backgroundColor: Colors.green,
                                 ),
                               );
@@ -498,14 +581,21 @@ class HomeScreen extends StatelessWidget {
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: themePrimary,
-                    foregroundColor: isDark ? Colors.deepPurple[900] : Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    foregroundColor: isDark
+                        ? Colors.deepPurple[900]
+                        : Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   child: itineraryProvider.isLoading
                       ? const SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
                         )
                       : const Text('Gabung'),
                 ),

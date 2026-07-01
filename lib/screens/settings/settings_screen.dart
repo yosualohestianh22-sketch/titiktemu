@@ -54,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          
+
           Card(
             elevation: 0,
             color: Theme.of(context).cardColor,
@@ -66,7 +66,10 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16.0,
+              ),
               child: Column(
                 children: [
                   ListTile(
@@ -74,7 +77,9 @@ class SettingsScreen extends StatelessWidget {
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                        color: Theme.of(
+                          context,
+                        ).primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
@@ -117,9 +122,9 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Section: Tentang Aplikasi
           Text(
             'TENTANG',
@@ -131,7 +136,7 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          
+
           Card(
             elevation: 0,
             color: Theme.of(context).cardColor,
@@ -150,7 +155,11 @@ class SettingsScreen extends StatelessWidget {
                   const Divider(height: 24),
                   _buildAboutRow(context, 'Versi', '1.0.0'),
                   const Divider(height: 24),
-                  _buildAboutRow(context, 'Tujuan', 'Aplikasi Perencana Liburan Kolaboratif'),
+                  _buildAboutRow(
+                    context,
+                    'Tujuan',
+                    'Aplikasi Perencana Liburan Kolaboratif',
+                  ),
                 ],
               ),
             ),
@@ -166,10 +175,7 @@ class SettingsScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
           Text(
             value,
             textAlign: TextAlign.end,

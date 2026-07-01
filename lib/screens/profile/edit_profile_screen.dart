@@ -28,12 +28,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery, 
+      source: ImageSource.gallery,
       imageQuality: 30, // Kompresi tinggi
-      maxWidth: 250,    // Batasi ukuran
+      maxWidth: 250, // Batasi ukuran
       maxHeight: 250,
     );
-    
+
     if (pickedFile != null) {
       final bytes = await pickedFile.readAsBytes();
       setState(() {
@@ -44,17 +44,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> _saveProfile() async {
     if (_nameController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Nama tidak boleh kosong')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Nama tidak boleh kosong')));
       return;
     }
 
     setState(() => _isLoading = true);
-    
+
     final authProvider = context.read<AuthProvider>();
-    bool success = await authProvider.updateProfile(_nameController.text.trim(), _selectedImageBytes);
-    
+    bool success = await authProvider.updateProfile(
+      _nameController.text.trim(),
+      _selectedImageBytes,
+    );
+
     setState(() => _isLoading = false);
 
     if (success && mounted) {
@@ -63,9 +66,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       );
       Navigator.pop(context);
     } else if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(authProvider.errorMessage)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(authProvider.errorMessage)));
     }
   }
 
@@ -78,7 +81,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Edit Profil', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Edit Profil',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -98,7 +104,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
+                          color: Colors.black.withValues(
+                            alpha: isDark ? 0.3 : 0.1,
+                          ),
                           blurRadius: 10,
                           offset: const Offset(0, 5),
                         ),
@@ -107,10 +115,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(60),
                       child: _selectedImageBytes != null
-                          ? Image.memory(_selectedImageBytes!, fit: BoxFit.cover)
+                          ? Image.memory(
+                              _selectedImageBytes!,
+                              fit: BoxFit.cover,
+                            )
                           : (user?.photoURL != null
-                              ? Image.network(user!.photoURL!, fit: BoxFit.cover)
-                              : Image.asset('assets/images/default_avatar.png', fit: BoxFit.cover)),
+                                ? Image.network(
+                                    user!.photoURL!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'assets/images/default_avatar.png',
+                                    fit: BoxFit.cover,
+                                  )),
                     ),
                   ),
                   Positioned(
@@ -124,7 +141,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           color: themePrimaryColor,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.camera_alt, color: isDark ? Colors.deepPurple[900] : Colors.white, size: 20),
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: isDark ? Colors.deepPurple[900] : Colors.white,
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
@@ -141,16 +162,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   width: 1,
                 ),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.03), blurRadius: 10, offset: const Offset(0, 5)),
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.03),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
                 ],
               ),
               child: TextField(
                 controller: _nameController,
-                style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
                 decoration: InputDecoration(
                   labelText: 'Nama Lengkap',
-                  prefixIcon: Icon(Icons.person_outline, color: themePrimaryColor),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+                  prefixIcon: Icon(
+                    Icons.person_outline,
+                    color: themePrimaryColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
                   filled: true,
                   fillColor: Colors.transparent,
                 ),
@@ -164,13 +197,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 onPressed: _isLoading ? null : _saveProfile,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: themePrimaryColor,
-                  foregroundColor: isDark ? Colors.deepPurple[900] : Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  foregroundColor: isDark
+                      ? Colors.deepPurple[900]
+                      : Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   elevation: 0,
                 ),
                 child: _isLoading
-                    ? CircularProgressIndicator(color: isDark ? Colors.deepPurple[900] : Colors.white)
-                    : const Text('Simpan Perubahan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    ? CircularProgressIndicator(
+                        color: isDark ? Colors.deepPurple[900] : Colors.white,
+                      )
+                    : const Text(
+                        'Simpan Perubahan',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
           ],

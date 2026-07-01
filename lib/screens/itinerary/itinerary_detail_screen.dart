@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -9,7 +10,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
 import '../../models/itinerary_model.dart';
 import '../../models/itinerary_item_model.dart';
-import '../../models/place_model.dart';
 import '../../providers/itinerary_provider.dart';
 
 class ItineraryDetailScreen extends StatefulWidget {
@@ -58,11 +58,14 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
   Future<void> _showJoinNotification(List<String> uids) async {
     for (final uid in uids) {
       try {
-        final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .get();
         if (userDoc.exists && mounted) {
           final userData = userDoc.data();
           final name = userData?['name'] ?? 'Rekan Baru';
-          
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Row(
@@ -74,7 +77,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                       '$name baru saja bergabung ke perjalanan ini! 🗺️',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black87,
                       ),
                     ),
                   ),
@@ -83,7 +88,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               backgroundColor: Theme.of(context).cardColor,
               behavior: SnackBarBehavior.floating,
               duration: const Duration(seconds: 4),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
             ),
           );
         }
@@ -130,11 +137,16 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
   }
 
   int get _tripDays {
-    return widget.itinerary.endDate.difference(widget.itinerary.startDate).inDays + 1;
+    return widget.itinerary.endDate
+            .difference(widget.itinerary.startDate)
+            .inDays +
+        1;
   }
 
   Future<void> _openGoogleMaps(double lat, double lng) async {
-    final Uri url = Uri.parse('https://www.google.com/maps/search/?api=1&query=$lat,$lng');
+    final Uri url = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+    );
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +164,8 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
       currentCompleted.add(day);
     }
 
-    final totalDays = itinerary.endDate.difference(itinerary.startDate).inDays + 1;
+    final totalDays =
+        itinerary.endDate.difference(itinerary.startDate).inDays + 1;
     final bool allDone = currentCompleted.length == totalDays;
 
     final provider = context.read<ItineraryProvider>();
@@ -165,11 +178,12 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
   Future<void> _toggleTripCompletion(ItineraryModel itinerary) async {
     final provider = context.read<ItineraryProvider>();
     final bool newStatus = !itinerary.isCompleted;
-    
+
     List<int> completed;
     if (newStatus) {
       // Tandai semua hari selesai
-      final totalDays = itinerary.endDate.difference(itinerary.startDate).inDays + 1;
+      final totalDays =
+          itinerary.endDate.difference(itinerary.startDate).inDays + 1;
       completed = List<int>.generate(totalDays, (i) => i + 1);
     } else {
       // Batalkan semua hari
@@ -224,27 +238,45 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               const SizedBox(height: 16),
               Text(
                 placeItem.place.name,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
               Row(
                 children: [
-                  Icon(Icons.category_rounded, size: 18, color: isDark ? Colors.grey[400] : Colors.grey[600]),
+                  Icon(
+                    Icons.category_rounded,
+                    size: 18,
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     placeItem.place.category,
-                    style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[600], fontSize: 14),
+                    style: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      fontSize: 14,
+                    ),
                   ),
                   const Spacer(),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: themePrimary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      placeItem.place.price == 0 ? 'Gratis' : 'Rp ${_formatNumber(placeItem.place.price)}',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: themePrimary),
+                      placeItem.place.price == 0
+                          ? 'Gratis'
+                          : 'Rp ${_formatNumber(placeItem.place.price)}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: themePrimary,
+                      ),
                     ),
                   ),
                 ],
@@ -252,7 +284,11 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               const SizedBox(height: 16),
               Text(
                 placeItem.place.description,
-                style: TextStyle(color: isDark ? Colors.grey[300] : Colors.grey[800], fontSize: 15, height: 1.5),
+                style: TextStyle(
+                  color: isDark ? Colors.grey[300] : Colors.grey[800],
+                  fontSize: 15,
+                  height: 1.5,
+                ),
               ),
               const SizedBox(height: 24),
               SizedBox(
@@ -261,14 +297,21 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     Navigator.pop(context);
-                    _openGoogleMaps(placeItem.place.latitude, placeItem.place.longitude);
+                    _openGoogleMaps(
+                      placeItem.place.latitude,
+                      placeItem.place.longitude,
+                    );
                   },
                   icon: const Icon(Icons.directions),
                   label: const Text('Navigasi ke Lokasi'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: themePrimary,
-                    foregroundColor: isDark ? Colors.deepPurple[900] : Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    foregroundColor: isDark
+                        ? Colors.deepPurple[900]
+                        : Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
                 ),
               ),
@@ -285,12 +328,17 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     if (places.isEmpty) return;
 
     if (places.length == 1) {
-      _openGoogleMaps(places.first.place.latitude, places.first.place.longitude);
+      _openGoogleMaps(
+        places.first.place.latitude,
+        places.first.place.longitude,
+      );
       return;
     }
 
-    final origin = '${places.first.place.latitude},${places.first.place.longitude}';
-    final destination = '${places.last.place.latitude},${places.last.place.longitude}';
+    final origin =
+        '${places.first.place.latitude},${places.first.place.longitude}';
+    final destination =
+        '${places.last.place.latitude},${places.last.place.longitude}';
 
     String waypoints = '';
     if (places.length > 2) {
@@ -301,12 +349,15 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     }
 
     final Uri url = Uri.parse(
-        'https://www.google.com/maps/dir/?api=1&origin=$origin&destination=$destination${waypoints.isNotEmpty ? '&waypoints=$waypoints' : ''}');
+      'https://www.google.com/maps/dir/?api=1&origin=$origin&destination=$destination${waypoints.isNotEmpty ? '&waypoints=$waypoints' : ''}',
+    );
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tidak dapat membuka rute di Google Maps')),
+          const SnackBar(
+            content: Text('Tidak dapat membuka rute di Google Maps'),
+          ),
         );
       }
     }
@@ -332,7 +383,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
             .toList();
 
         // Create markers for each place
-        final List<Marker> placeMarkers = routePoints.asMap().entries.map((entry) {
+        final List<Marker> placeMarkers = routePoints.asMap().entries.map((
+          entry,
+        ) {
           final index = entry.key;
           final point = entry.value;
           final place = itinerary.places[index];
@@ -346,7 +399,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 decoration: BoxDecoration(
                   color: themePrimary,
                   shape: BoxShape.circle,
-                  border: Border.all(color: isDark ? const Color(0xFF1E1E2E) : Colors.white, width: 2),
+                  border: Border.all(
+                    color: isDark ? const Color(0xFF1E1E2E) : Colors.white,
+                    width: 2,
+                  ),
                   boxShadow: const [
                     BoxShadow(
                       color: Colors.black26,
@@ -370,6 +426,47 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
           );
         }).toList();
 
+        // Add Hotel to markers if present
+        if (itinerary.hotelLatitude != null && itinerary.hotelLongitude != null) {
+          final hotelLatLng = LatLng(itinerary.hotelLatitude!, itinerary.hotelLongitude!);
+          placeMarkers.add(
+            Marker(
+              point: hotelLatLng,
+              width: 44,
+              height: 44,
+              child: GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('🏨 Hotel: ${itinerary.hotelName} (Rp ${_formatNumber(itinerary.hotelPrice ?? 0)} / malam)'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.pink,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isDark ? const Color(0xFF1E1E2E) : Colors.white,
+                      width: 2.5,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 3)),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.hotel_rounded, color: Colors.white, size: 20),
+                  ),
+                ),
+              ),
+            ),
+          );
+          
+          // Add to bounds points
+          routePoints.add(hotelLatLng);
+        }
+
         // Determine Bounds to fit all points
         CameraFit? cameraFit;
         if (routePoints.isNotEmpty) {
@@ -390,15 +487,22 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 pinned: true,
                 stretch: true,
                 leading: CircleAvatar(
-                  backgroundColor: Theme.of(context).cardColor.withValues(alpha: 0.9),
+                  backgroundColor: Theme.of(
+                    context,
+                  ).cardColor.withValues(alpha: 0.9),
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyLarge?.color),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
                 actions: [
                   StreamBuilder<List<Map<String, dynamic>>>(
-                    stream: itineraryProvider.getCollaboratorsProfilesStream(itinerary.sharedWith),
+                    stream: itineraryProvider.getCollaboratorsProfilesStream(
+                      itinerary.sharedWith,
+                    ),
                     builder: (context, snapshot) {
                       final profiles = snapshot.data ?? [];
                       return Padding(
@@ -416,23 +520,31 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           ? _buildMockMap(targetLatLng, themePrimary)
                           : FlutterMap(
                               options: MapOptions(
-                                initialCenter: routePoints.isNotEmpty ? routePoints.first : targetLatLng,
+                                initialCenter: routePoints.isNotEmpty
+                                    ? routePoints.first
+                                    : targetLatLng,
                                 initialZoom: 12.0,
                                 initialCameraFit: cameraFit,
                               ),
                               children: [
                                 TileLayer(
-                                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                  userAgentPackageName: 'com.example.titik_temu',
+                                  urlTemplate:
+                                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                  userAgentPackageName:
+                                      'com.example.titik_temu',
                                 ),
                                 if (routePoints.isNotEmpty)
                                   PolylineLayer(
                                     polylines: [
                                       Polyline(
                                         points: routePoints,
-                                        color: themePrimary.withValues(alpha: 0.8),
+                                        color: themePrimary.withValues(
+                                          alpha: 0.8,
+                                        ),
                                         strokeWidth: 4.0,
-                                        pattern: StrokePattern.dashed(segments: const [10, 10]),
+                                        pattern: StrokePattern.dashed(
+                                          segments: const [10, 10],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -493,7 +605,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(20),
@@ -537,11 +652,15 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                         Card(
                           elevation: 4,
                           color: Theme.of(context).cardColor,
-                          shadowColor: themePrimary.withValues(alpha: isDark ? 0.3 : 0.1),
+                          shadowColor: themePrimary.withValues(
+                            alpha: isDark ? 0.3 : 0.1,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(
-                              color: isDark ? Colors.grey[850]! : Colors.transparent,
+                              color: isDark
+                                  ? Colors.grey[850]!
+                                  : Colors.transparent,
                               width: 1,
                             ),
                           ),
@@ -555,21 +674,67 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                                   '${_formatDate(itinerary.startDate)} - ${_formatDate(itinerary.endDate)}',
                                   themePrimary,
                                 ),
-                                Divider(height: 24, thickness: 1, color: isDark ? Colors.grey[800] : Colors.grey[200]),
+                                Divider(
+                                  height: 24,
+                                  thickness: 1,
+                                  color: isDark
+                                      ? Colors.grey[800]
+                                      : Colors.grey[200],
+                                ),
                                 _buildInfoRow(
                                   Icons.timelapse_rounded,
                                   'Durasi',
                                   '$_tripDays Hari Perjalanan',
                                   themePrimary,
                                 ),
-                                Divider(height: 24, thickness: 1, color: isDark ? Colors.grey[800] : Colors.grey[200]),
+                                Divider(
+                                  height: 24,
+                                  thickness: 1,
+                                  color: isDark
+                                      ? Colors.grey[800]
+                                      : Colors.grey[200],
+                                ),
+                                _buildInfoRow(
+                                  Icons.people_alt_rounded,
+                                  'Jumlah Anggota',
+                                  '${itinerary.travelersCount} Orang',
+                                  themePrimary,
+                                ),
+                                Divider(
+                                  height: 24,
+                                  thickness: 1,
+                                  color: isDark
+                                      ? Colors.grey[800]
+                                      : Colors.grey[200],
+                                ),
                                 _buildInfoRow(
                                   Icons.account_balance_wallet_rounded,
                                   'Maksimal Anggaran',
                                   budgetFormatted,
                                   themePrimary,
                                 ),
-                                Divider(height: 24, thickness: 1, color: isDark ? Colors.grey[800] : Colors.grey[200]),
+                                if (itinerary.hotelName != null) ...[
+                                  Divider(
+                                    height: 24,
+                                    thickness: 1,
+                                    color: isDark
+                                        ? Colors.grey[800]
+                                        : Colors.grey[200],
+                                  ),
+                                  _buildInfoRow(
+                                    Icons.hotel_rounded,
+                                    'Penginapan (Hotel)',
+                                    '${itinerary.hotelName} (Rp ${_formatNumber(itinerary.hotelPrice ?? 0)} / malam)',
+                                    themePrimary,
+                                  ),
+                                ],
+                                Divider(
+                                  height: 24,
+                                  thickness: 1,
+                                  color: isDark
+                                      ? Colors.grey[800]
+                                      : Colors.grey[200],
+                                ),
                                 _buildInviteCodeRow(
                                   context,
                                   itinerary.inviteCode,
@@ -590,10 +755,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Render daftar wisata
                         _buildPlacesList(itinerary.places, itinerary),
-                        
+
                         const SizedBox(height: 24),
                         // Trip completion section
                         _buildTripCompletionSection(context, itinerary),
@@ -611,8 +776,19 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
   }
 
   // --- Widget Tambahan untuk Daftar Wisata ---
-  
-  Widget _buildPlacesList(List<ItineraryItemModel> places, ItineraryModel itinerary) {
+
+  double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const p = 0.017453292519943295;
+    final a = 0.5 - cos((lat2 - lat1) * p)/2 + 
+          cos(lat1 * p) * cos(lat2 * p) * 
+          (1 - cos((lon2 - lon1) * p))/2;
+    return 12742 * asin(sqrt(a)); // KM
+  }
+
+  Widget _buildPlacesList(
+    List<ItineraryItemModel> places,
+    ItineraryModel itinerary,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themePrimary = Theme.of(context).primaryColor;
 
@@ -623,7 +799,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: isDark ? Colors.grey[850]! : Colors.grey.shade200),
+          border: Border.all(
+            color: isDark ? Colors.grey[850]! : Colors.grey.shade200,
+          ),
         ),
         child: Text(
           'Belum ada tempat wisata yang di-generate. Coba buat itinerary baru.',
@@ -646,7 +824,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
       children: sortedDays.map((day) {
         final dayPlaces = groupedPlaces[day]!;
         final dayDate = itinerary.startDate.add(Duration(days: day - 1));
-        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -655,7 +833,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: themePrimary,
                       borderRadius: BorderRadius.circular(20),
@@ -682,14 +863,32 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 ],
               ),
             ),
-            ...dayPlaces.map((item) => _buildPlaceCard(item.place)),
+            ...dayPlaces.asMap().entries.map((entry) {
+              final idx = entry.key;
+              final item = entry.value;
+              double? distance;
+              if (idx > 0) {
+                final prevItem = dayPlaces[idx - 1];
+                distance = _calculateDistance(
+                  prevItem.place.latitude,
+                  prevItem.place.longitude,
+                  item.place.latitude,
+                  item.place.longitude,
+                );
+              }
+              return _buildPlaceCard(item, distance);
+            }),
           ],
         );
       }).toList(),
     );
   }
 
-  Widget _buildDayCheckbox(BuildContext context, int day, ItineraryModel itinerary) {
+  Widget _buildDayCheckbox(
+    BuildContext context,
+    int day,
+    ItineraryModel itinerary,
+  ) {
     final isCompleted = itinerary.completedDays.contains(day);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -705,7 +904,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               : (isDark ? Colors.grey[850] : Colors.grey[100]),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isCompleted ? Colors.green : (isDark ? Colors.grey[800]! : Colors.grey[300]!),
+            color: isCompleted
+                ? Colors.green
+                : (isDark ? Colors.grey[800]! : Colors.grey[300]!),
             width: 1.5,
           ),
         ),
@@ -713,8 +914,12 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              isCompleted ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
-              color: isCompleted ? Colors.green : (isDark ? Colors.grey[400] : Colors.grey[600]),
+              isCompleted
+                  ? Icons.check_circle_rounded
+                  : Icons.radio_button_unchecked_rounded,
+              color: isCompleted
+                  ? Colors.green
+                  : (isDark ? Colors.grey[400] : Colors.grey[600]),
               size: 16,
             ),
             const SizedBox(width: 6),
@@ -723,7 +928,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: isCompleted ? Colors.green : (isDark ? Colors.grey[300] : Colors.grey[700]),
+                color: isCompleted
+                    ? Colors.green
+                    : (isDark ? Colors.grey[300] : Colors.grey[700]),
               ),
             ),
           ],
@@ -732,7 +939,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     );
   }
 
-  Widget _buildTripCompletionSection(BuildContext context, ItineraryModel itinerary) {
+  Widget _buildTripCompletionSection(
+    BuildContext context,
+    ItineraryModel itinerary,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themePrimary = Theme.of(context).primaryColor;
     final isCompleted = itinerary.isCompleted;
@@ -746,7 +956,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF11998e), Color(0xFF38ef7d)], // Gradien hijau premium
+                  colors: [
+                    Color(0xFF11998e),
+                    Color(0xFF38ef7d),
+                  ], // Gradien hijau premium
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -802,11 +1015,17 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                     ),
                     child: const Text(
                       'Batalkan Status Selesai',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],
@@ -825,7 +1044,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: themePrimary,
-                  foregroundColor: isDark ? Colors.deepPurple[900] : Colors.white,
+                  foregroundColor: isDark
+                      ? Colors.deepPurple[900]
+                      : Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -836,7 +1057,8 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     );
   }
 
-  Widget _buildPlaceCard(PlaceModel place) {
+  Widget _buildPlaceCard(ItineraryItemModel item, double? distanceToPrev) {
+    final place = item.place;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themePrimary = Theme.of(context).primaryColor;
 
@@ -845,7 +1067,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: isDark ? Colors.grey[850]! : Colors.grey.shade200),
+        border: Border.all(
+          color: isDark ? Colors.grey[850]! : Colors.grey.shade200,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.1 : 0.02),
@@ -867,14 +1091,17 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 Image.network(
                   place.imageUrl,
                   width: 110,
-                  height: 110,
+                  height: 125,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       width: 110,
-                      height: 110,
+                      height: 125,
                       color: isDark ? Colors.grey[800] : Colors.grey.shade200,
-                      child: const Icon(Icons.image_not_supported, color: Colors.grey),
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        color: Colors.grey,
+                      ),
                     );
                   },
                 ),
@@ -895,38 +1122,96 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: isDark ? themePrimary.withValues(alpha: 0.15) : const Color(0xFFF3E5F5),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            place.category,
-                            style: TextStyle(
-                              color: isDark ? themePrimary : const Color(0xFF6A1B9A),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
                         Row(
                           children: [
-                            Icon(Icons.payments_outlined, size: 14, color: isDark ? Colors.grey[400] : Colors.grey),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isDark
+                                    ? themePrimary.withValues(alpha: 0.15)
+                                    : const Color(0xFFF3E5F5),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                place.category,
+                                style: TextStyle(
+                                  color: isDark
+                                      ? themePrimary
+                                      : const Color(0xFF6A1B9A),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // Duration badge
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.orange.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                '${item.durationHours} Jam',
+                                style: const TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.payments_outlined,
+                              size: 14,
+                              color: isDark ? Colors.grey[400] : Colors.grey,
+                            ),
                             const SizedBox(width: 4),
                             Text(
-                              place.price == 0 
-                                  ? 'Gratis' 
+                              place.price == 0
+                                  ? 'Gratis'
                                   : 'Rp ${NumberFormat('#,###', 'id_ID').format(place.price)}',
                               style: TextStyle(
-                                color: isDark ? Colors.grey[400] : Colors.grey.shade600,
+                                color: isDark
+                                    ? Colors.grey[400]
+                                    : Colors.grey.shade600,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
+                        if (distanceToPrev != null) ...[
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_outlined,
+                                size: 14,
+                                color: Colors.blue,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Jarak: ${distanceToPrev.toStringAsFixed(1)} km',
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -940,7 +1225,11 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                       color: themePrimary.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.navigation_rounded, color: themePrimary, size: 20),
+                    child: Icon(
+                      Icons.navigation_rounded,
+                      color: themePrimary,
+                      size: 20,
+                    ),
                   ),
                 ),
               ],
@@ -951,7 +1240,12 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value, Color primaryColor) {
+  Widget _buildInfoRow(
+    IconData icon,
+    String label,
+    String value,
+    Color primaryColor,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
@@ -978,10 +1272,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
             const SizedBox(height: 4),
             Text(
               value,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -989,9 +1280,13 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     );
   }
 
-  Widget _buildInviteCodeRow(BuildContext context, String code, Color primaryColor) {
+  Widget _buildInviteCodeRow(
+    BuildContext context,
+    String code,
+    Color primaryColor,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Row(
       children: [
         Container(
@@ -1033,10 +1328,14 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                         Clipboard.setData(ClipboardData(text: code));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Kode undangan "$code" berhasil disalin!'),
+                            content: Text(
+                              'Kode undangan "$code" berhasil disalin!',
+                            ),
                             duration: const Duration(seconds: 2),
                             behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         );
                       },
@@ -1083,7 +1382,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
             const SizedBox(height: 4),
             Text(
               'Coordinate: ${targetLatLng.latitude.toStringAsFixed(4)}, ${targetLatLng.longitude.toStringAsFixed(4)}',
-              style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontSize: 13),
+              style: TextStyle(
+                color: isDark ? Colors.white70 : Colors.black54,
+                fontSize: 13,
+              ),
             ),
             const SizedBox(height: 8),
             Container(
@@ -1094,9 +1396,13 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
               ),
               child: Text(
                 'Menggunakan Fallback Peta Indah',
-                style: TextStyle(color: isDark ? Colors.deepPurple[900] : Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: isDark ? Colors.deepPurple[900] : Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -1105,7 +1411,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
 
   Widget _buildCollaboratorsBar(List<Map<String, dynamic>> profiles) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     if (profiles.isEmpty) return const SizedBox.shrink();
 
     // Figma border colors
@@ -1128,8 +1434,8 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
       children: [
         SizedBox(
           height: avatarSize,
-          width: displayProfiles.isEmpty 
-              ? 0 
+          width: displayProfiles.isEmpty
+              ? 0
               : (displayProfiles.length * (avatarSize - overlap)) + overlap,
           child: Stack(
             clipBehavior: Clip.none,
@@ -1158,8 +1464,12 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                       ],
                     ),
                     child: CircleAvatar(
-                      backgroundColor: isDark ? Colors.grey[800] : Colors.grey[200],
-                      backgroundImage: photoUrl != null ? NetworkImage(photoUrl) : null,
+                      backgroundColor: isDark
+                          ? Colors.grey[800]
+                          : Colors.grey[200],
+                      backgroundImage: photoUrl != null
+                          ? NetworkImage(photoUrl)
+                          : null,
                       child: photoUrl == null
                           ? Text(
                               name.isNotEmpty ? name[0].toUpperCase() : 'T',

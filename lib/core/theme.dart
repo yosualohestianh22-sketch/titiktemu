@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   // Warna Utama (Sesuai kesepakatan: Ungu Pastel Terang)
   static const Color primaryColor = Color(0xFFCBC3E3);
-  
+
   // Warna Latar Light Theme
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color textColor = Color(0xFF333333);
@@ -26,7 +26,9 @@ class AppTheme {
         onSurface: textColor,
         brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: const Color(0xFFF5F5FA), // Background abu-abu sangat muda khas light theme
+      scaffoldBackgroundColor: const Color(
+        0xFFF5F5FA,
+      ), // Background abu-abu sangat muda khas light theme
       cardColor: backgroundColor,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -38,7 +40,8 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
-          foregroundColor: Colors.deepPurple[900], // Kontras agar teks terlihat jelas
+          foregroundColor:
+              Colors.deepPurple[900], // Kontras agar teks terlihat jelas
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -49,7 +52,10 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.grey[100],
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 20,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -93,7 +99,8 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
-          foregroundColor: Colors.deepPurple[900], // Kontras agar teks terlihat jelas
+          foregroundColor:
+              Colors.deepPurple[900], // Kontras agar teks terlihat jelas
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -104,7 +111,10 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFF161622),
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 20,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

@@ -14,11 +14,9 @@ import 'package:intl/date_symbol_data_local.dart';
 void main() async {
   // Wajib dipanggil sebelum Firebase.initializeApp()
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Mengaktifkan Firebase sesuai platform (Android/Web/iOS)
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize Supabase for Storage
   await Supabase.initialize(
@@ -32,7 +30,7 @@ void main() async {
 
   // Inisialisasi locale id_ID untuk formatting tanggal
   await initializeDateFormatting('id_ID', null);
-  
+
   // Membungkus aplikasi dengan MultiProvider
   runApp(
     MultiProvider(

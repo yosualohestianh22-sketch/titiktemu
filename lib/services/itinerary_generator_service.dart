@@ -54,7 +54,7 @@ class ItineraryGeneratorService {
           currentSpent += place.price;
           placesThisDay++;
         }
-        
+
         placeIndex++;
       }
 

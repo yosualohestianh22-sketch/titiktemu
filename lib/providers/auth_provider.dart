@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
-  
+
   bool _isLoading = false;
   String _errorMessage = '';
 
@@ -99,7 +99,10 @@ class AuthProvider with ChangeNotifier {
   }
 
   // Update Password
-  Future<bool> updatePassword(String currentPassword, String newPassword) async {
+  Future<bool> updatePassword(
+    String currentPassword,
+    String newPassword,
+  ) async {
     _setLoading(true);
     clearError();
     try {

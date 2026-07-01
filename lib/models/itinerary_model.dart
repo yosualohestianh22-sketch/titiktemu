@@ -16,6 +16,12 @@ class ItineraryModel {
   final bool isCompleted;
   final List<String> sharedWith;
   final String inviteCode;
+  final int travelersCount;
+  final String? hotelName;
+  final double? hotelPrice;
+  final double? hotelLatitude;
+  final double? hotelLongitude;
+  final String? hotelImageUrl;
 
   ItineraryModel({
     required this.id,
@@ -32,6 +38,12 @@ class ItineraryModel {
     this.isCompleted = false,
     this.sharedWith = const [],
     this.inviteCode = '',
+    this.travelersCount = 1,
+    this.hotelName,
+    this.hotelPrice,
+    this.hotelLatitude,
+    this.hotelLongitude,
+    this.hotelImageUrl,
   });
 
   // Konversi dari JSON (Firestore) ke Object Dart
@@ -54,6 +66,12 @@ class ItineraryModel {
       isCompleted: data['isCompleted'] ?? false,
       sharedWith: List<String>.from(data['sharedWith'] ?? []),
       inviteCode: data['inviteCode'] ?? '',
+      travelersCount: data['travelersCount']?.toInt() ?? 1,
+      hotelName: data['hotelName'],
+      hotelPrice: data['hotelPrice']?.toDouble(),
+      hotelLatitude: data['hotelLatitude']?.toDouble(),
+      hotelLongitude: data['hotelLongitude']?.toDouble(),
+      hotelImageUrl: data['hotelImageUrl'],
     );
   }
 
@@ -73,6 +91,12 @@ class ItineraryModel {
       'isCompleted': isCompleted,
       'sharedWith': sharedWith,
       'inviteCode': inviteCode,
+      'travelersCount': travelersCount,
+      'hotelName': hotelName,
+      'hotelPrice': hotelPrice,
+      'hotelLatitude': hotelLatitude,
+      'hotelLongitude': hotelLongitude,
+      'hotelImageUrl': hotelImageUrl,
     };
   }
 }

@@ -11,13 +11,15 @@ class AuthService {
   User? get currentUser => _auth.currentUser;
 
   // Fungsi Register (Daftar Akun Baru)
-  Future<UserCredential> registerWithEmailAndPassword(String name, String email, String password) async {
+  Future<UserCredential> registerWithEmailAndPassword(
+    String name,
+    String email,
+    String password,
+  ) async {
     try {
       // 1. Mendaftarkan email & password ke Firebase Auth
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       // 2. Menyimpan nama pengguna ke Firestore Database
       if (userCredential.user != null) {
@@ -27,7 +29,7 @@ class AuthService {
           'email': email,
           'createdAt': FieldValue.serverTimestamp(),
         });
-        
+
         // Update display name di profil Auth
         await userCredential.user!.updateDisplayName(name);
       }
@@ -49,7 +51,10 @@ class AuthService {
   }
 
   // Fungsi Login (Masuk)
-  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -57,7 +62,9 @@ class AuthService {
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
+      if (e.code == 'user-not-found' ||
+          e.code == 'wrong-password' ||
+          e.code == 'invalid-credential') {
         throw Exception('Email atau Password salah.');
       }
       throw Exception(e.message ?? 'Terjadi kesalahan saat login.');
@@ -97,16 +104,20 @@ class AuthService {
 
       // Upload image to Supabase if provided
       if (imageBytes != null) {
-        final fileName = '${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg';
-        
+        final fileName =
+            '${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
         await Supabase.instance.client.storage
             .from('avatars')
             .uploadBinary(
-              fileName, 
+              fileName,
               imageBytes,
-              fileOptions: const FileOptions(contentType: 'image/jpeg', upsert: true),
+              fileOptions: const FileOptions(
+                contentType: 'image/jpeg',
+                upsert: true,
+              ),
             );
-            
+
         // Dapatkan URL publik
         photoUrl = Supabase.instance.client.storage
             .from('avatars')
@@ -131,7 +142,10 @@ class AuthService {
   }
 
   // Update Password
-  Future<void> updatePassword(String currentPassword, String newPassword) async {
+  Future<void> updatePassword(
+    String currentPassword,
+    String newPassword,
+  ) async {
     try {
       final user = _auth.currentUser;
       if (user == null) throw Exception('Tidak ada user yang login.');
