@@ -8,6 +8,7 @@ import 'package:titik_temu/screens/itinerary/itinerary_detail_screen.dart';
 import 'package:titik_temu/screens/history/history_screen.dart';
 import 'package:titik_temu/screens/profile/profile_screen.dart';
 import 'package:intl/intl.dart';
+import 'package:titik_temu/screens/itinerary/tambah_kuliner_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -195,6 +196,32 @@ class HomeScreen extends StatelessWidget {
                             : const Color(0xFF6A1B9A),
                         width: 1.5,
                       ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12), // Jarak antar tombol
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Navigasi ke halaman tambah kuliner yang kamu buat sebelumnya
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TambahKulinerScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.restaurant_rounded),
+                    label: const Text('Rekomendasi Kuliner'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isDark
+                          ? Theme.of(context).primaryColor
+                          : const Color(0xFF6A1B9A),
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
