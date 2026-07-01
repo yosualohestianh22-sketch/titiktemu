@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:titik_temu/providers/auth_provider.dart';
 import 'package:titik_temu/providers/itinerary_provider.dart';
 import 'package:titik_temu/screens/itinerary/select_places_screen.dart';
+import 'package:titik_temu/screens/itinerary/traveloka_date_picker.dart';
 import 'package:intl/intl.dart';
 
 // Formatter untuk menambahkan titik pemisah ribuan secara otomatis
@@ -50,45 +51,25 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
   static const _gradientEnd = Color(0xFF4F46E5);
 
   Future<void> _pickDateRange() async {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final themePrimary = Theme.of(context).primaryColor;
-    final themeCardColor = Theme.of(context).cardColor;
-
-    final DateTimeRange? picked = await showDateRangePicker(
+    final DateTimeRange? picked = await showGeneralDialog<DateTimeRange>(
       context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: isDark
-                ? ColorScheme.dark(
-                    primary: themePrimary,
-                    onPrimary: const Color(0xFF0F172A),
-                    secondary: themePrimary.withValues(alpha: 0.15),
-                    onSecondary: themePrimary,
-                    surface: themeCardColor,
-                    onSurface: Colors.white,
-                  )
-                : ColorScheme.light(
-                    primary: themePrimary,
-                    onPrimary: Colors.white,
-                    secondary: const Color(0xFFEEF2FF),
-                    onSecondary: themePrimary,
-                    surface: themeCardColor,
-                    onSurface: const Color(0xFF1E293B),
-                  ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(foregroundColor: themePrimary),
-            ),
-            dialogTheme: const DialogThemeData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(24)),
-              ),
-            ),
-          ),
-          child: child!,
+      barrierDismissible: true,
+      barrierLabel: 'TravelokaDatePicker',
+      barrierColor: Colors.black54,
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, anim1, anim2) {
+        return TravelokaDatePickerDialog(
+          initialStartDate: _startDate,
+          initialEndDate: _endDate,
+        );
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: anim1, curve: Curves.easeOutQuad)),
+          child: child,
         );
       },
     );
