@@ -23,6 +23,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      primaryColor: primaryColor,
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryColor,
         primary: primaryColor,
@@ -82,6 +83,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      primaryColor: darkPrimaryColor,
       colorScheme: ColorScheme.fromSeed(
         seedColor: darkPrimaryColor,
         primary: darkPrimaryColor,
