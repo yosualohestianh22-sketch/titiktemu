@@ -15,8 +15,7 @@ class TravelokaDatePickerDialog extends StatefulWidget {
   State<TravelokaDatePickerDialog> createState() => _TravelokaDatePickerDialogState();
 }
 
-class _TravelokaDatePickerDialogState extends State<TravelokaDatePickerDialog> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _TravelokaDatePickerDialogState extends State<TravelokaDatePickerDialog> {
   DateTime? _startDate;
   DateTime? _endDate;
   late List<DateTime> _months;
@@ -24,7 +23,6 @@ class _TravelokaDatePickerDialogState extends State<TravelokaDatePickerDialog> w
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     _startDate = widget.initialStartDate;
     _endDate = widget.initialEndDate;
 
@@ -37,7 +35,6 @@ class _TravelokaDatePickerDialogState extends State<TravelokaDatePickerDialog> w
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
   }
 
@@ -114,40 +111,6 @@ class _TravelokaDatePickerDialogState extends State<TravelokaDatePickerDialog> w
       ),
       body: Column(
         children: [
-          // 1. Tab Bar ala Traveloka
-          Container(
-            color: isDark ? const Color(0xFF16162A) : Colors.white,
-            child: TabBar(
-              controller: _tabController,
-              indicatorColor: travelokaGreen,
-              indicatorWeight: 3,
-              labelColor: travelokaGreen,
-              unselectedLabelColor: isDark ? Colors.grey[400] : Colors.grey[600],
-              labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              tabs: const [
-                Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.calendar_today_rounded, size: 16),
-                      SizedBox(width: 8),
-                      Text('Kalender'),
-                    ],
-                  ),
-                ),
-                Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.bar_chart_rounded, size: 18),
-                      SizedBox(width: 8),
-                      Text('Tabel Harga'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
 
           // 2. Row Info Berangkat & Pulang ala Traveloka
           Container(
@@ -269,45 +232,12 @@ class _TravelokaDatePickerDialogState extends State<TravelokaDatePickerDialog> w
 
           // 4. List Kalender Vertikal
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              physics: const NeverScrollableScrollPhysics(), // Batasi tab agar tidak swipe sembarangan
-              children: [
-                // Tab 1: Kalender Scrollable
-                ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  itemCount: _months.length,
-                  itemBuilder: (context, index) {
-                    return _buildMonthSection(_months[index], isDark);
-                  },
-                ),
-                // Tab 2: Tabel Harga (Mock/Kosong)
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.bar_chart_rounded, size: 64, color: travelokaGreen.withValues(alpha: 0.5)),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Tabel Harga Belum Tersedia',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : Colors.black87,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Fitur perbandingan harga tiket akan segera hadir.',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isDark ? Colors.grey[400] : Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              itemCount: _months.length,
+              itemBuilder: (context, index) {
+                return _buildMonthSection(_months[index], isDark);
+              },
             ),
           ),
 
