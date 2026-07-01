@@ -43,16 +43,6 @@ final List<MockHotelModel> mockHotels = [
     address: 'Jl. Jendral Sudirman No. 9, Yogyakarta',
   ),
   MockHotelModel(
-    name: 'Grand Ambarrukmo Yogyakarta',
-    city: 'Yogyakarta',
-    latitude: -7.7825,
-    longitude: 110.4012,
-    pricePerNight: 750000,
-    rating: 4.6,
-    imageUrl: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&auto=format&fit=crop&q=60',
-    address: 'Jl. Laksda Adisucipto No. 82, Yogyakarta',
-  ),
-  MockHotelModel(
     name: 'POP! Hotel Sangaji Yogyakarta',
     city: 'Yogyakarta',
     latitude: -7.7811,
@@ -83,16 +73,6 @@ final List<MockHotelModel> mockHotels = [
     rating: 4.6,
     imageUrl: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=500&auto=format&fit=crop&q=60',
     address: 'Jalan Pantai Kuta, Banjar Pande Mas, Kuta, Bali',
-  ),
-  MockHotelModel(
-    name: 'Grand Hyatt Bali',
-    city: 'Bali',
-    latitude: -8.8028,
-    longitude: 115.2312,
-    pricePerNight: 2000000,
-    rating: 4.7,
-    imageUrl: 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=500&auto=format&fit=crop&q=60',
-    address: 'Kawasan Wisata Nusa Dua BTDC, Kuta Selatan, Nusa Dua, Bali',
   ),
   MockHotelModel(
     name: 'Kuta Central Park Hotel',
@@ -158,16 +138,6 @@ final List<MockHotelModel> mockHotels = [
     imageUrl: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=500&auto=format&fit=crop&q=60',
     address: 'Jl. H.O.S. Cokroaminoto No. 41-43, Pasirkaliki, Bandung',
   ),
-  MockHotelModel(
-    name: 'Ivory Hotel Bandung',
-    city: 'Bandung',
-    latitude: -6.9068,
-    longitude: 107.6115,
-    pricePerNight: 450000,
-    rating: 4.3,
-    imageUrl: 'https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?w=500&auto=format&fit=crop&q=60',
-    address: 'Jl. Bahureksa No. 3, Citarum, Bandung Wetan, Bandung',
-  ),
 
   // --- SURABAYA ---
   MockHotelModel(
@@ -180,6 +150,16 @@ final List<MockHotelModel> mockHotels = [
     imageUrl: 'https://images.unsplash.com/photo-1554009975-d74653b879f1?w=500&auto=format&fit=crop&q=60',
     address: 'Jl. Tunjungan No. 65, Genteng, Surabaya',
   ),
+  MockHotelModel(
+    name: 'Swiss-Belinn Tunjungan Surabaya',
+    city: 'Surabaya',
+    latitude: -7.2605,
+    longitude: 112.7395,
+    pricePerNight: 550000,
+    rating: 4.4,
+    imageUrl: 'https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=500&auto=format&fit=crop&q=60',
+    address: 'Jl. Tunjungan No. 101, Genteng, Surabaya',
+  ),
 
   // --- LOMBOK ---
   MockHotelModel(
@@ -191,5 +171,103 @@ final List<MockHotelModel> mockHotels = [
     rating: 4.6,
     imageUrl: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=500&auto=format&fit=crop&q=60',
     address: 'Jl. Raya Senggigi Km. 8, Senggigi, Lombok',
+  ),
+  MockHotelModel(
+    name: 'Novotel Lombok Resort & Villas',
+    city: 'Lombok',
+    latitude: -8.8988,
+    longitude: 116.2912,
+    pricePerNight: 950000,
+    rating: 4.5,
+    imageUrl: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=500&auto=format&fit=crop&q=60',
+    address: 'Pantai Putri Nyale, Pujut, Kuta, Lombok',
+  ),
+
+  // --- LABUAN BAJO ---
+  MockHotelModel(
+    name: 'AYANA Komodo Waecicu Beach',
+    city: 'Labuan Bajo',
+    latitude: -8.4688,
+    longitude: 119.8712,
+    pricePerNight: 3500000,
+    rating: 4.9,
+    imageUrl: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500&auto=format&fit=crop&q=60',
+    address: 'Pantai Waecicu, Labuan Bajo, Kabupaten Manggarai Barat, NTT',
+  ),
+  MockHotelModel(
+    name: 'Loccal Collection Hotel Komodo',
+    city: 'Labuan Bajo',
+    latitude: -8.4892,
+    longitude: 119.8805,
+    pricePerNight: 1600000,
+    rating: 4.7,
+    imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500&auto=format&fit=crop&q=60',
+    address: 'Jl. Raya Binongko, Labuan Bajo, NTT',
+  ),
+
+  // --- BORNEO ---
+  MockHotelModel(
+    name: 'Maratua Paradise Resort',
+    city: 'Borneo',
+    latitude: 2.2452,
+    longitude: 118.6358,
+    pricePerNight: 1750000,
+    rating: 4.6,
+    imageUrl: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=500&auto=format&fit=crop&q=60',
+    address: 'Pulau Maratua, Kepulauan Derawan, Kalimantan Timur',
+  ),
+  MockHotelModel(
+    name: 'Swiss-Belhotel Tarakan',
+    city: 'Borneo',
+    latitude: 3.3252,
+    longitude: 117.5888,
+    pricePerNight: 850000,
+    rating: 4.3,
+    imageUrl: 'https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=500&auto=format&fit=crop&q=60',
+    address: 'Jl. Mulawarman No. 15, Tarakan Barat, Tarakan',
+  ),
+
+  // --- MAKASSAR ---
+  MockHotelModel(
+    name: 'The Rinra Makassar',
+    city: 'Makassar',
+    latitude: -5.1582,
+    longitude: 119.4042,
+    pricePerNight: 1200000,
+    rating: 4.8,
+    imageUrl: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=500&auto=format&fit=crop&q=60',
+    address: 'Jl. Metro Tanjung Bunga No. 2, Makassar',
+  ),
+  MockHotelModel(
+    name: 'Harper Perintis Makassar',
+    city: 'Makassar',
+    latitude: -5.1112,
+    longitude: 119.5088,
+    pricePerNight: 650000,
+    rating: 4.4,
+    imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&auto=format&fit=crop&q=60',
+    address: 'Jl. Perintis Kemerdekaan KM 15, Makassar',
+  ),
+
+  // --- RAJA AMPAT ---
+  MockHotelModel(
+    name: 'Papua Paradise Eco Resort',
+    city: 'Raja Ampat',
+    latitude: -0.8654,
+    longitude: 130.4585,
+    pricePerNight: 2800000,
+    rating: 4.8,
+    imageUrl: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=500&auto=format&fit=crop&q=60',
+    address: 'Pulau Birie, Selat Dampier, Raja Ampat, Papua Barat',
+  ),
+  MockHotelModel(
+    name: 'Meridian Adventure Marina Club',
+    city: 'Raja Ampat',
+    latitude: -0.4288,
+    longitude: 130.8012,
+    pricePerNight: 1900000,
+    rating: 4.6,
+    imageUrl: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=500&auto=format&fit=crop&q=60',
+    address: 'Waisai, Kec. Kota Waisai, Kabupaten Raja Ampat, Papua Barat',
   ),
 ];
