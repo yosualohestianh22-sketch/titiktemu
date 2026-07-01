@@ -318,7 +318,7 @@ class _SelectPlacesScreenState extends State<SelectPlacesScreen>
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                               backgroundColor: isWithinBudget ? themePrimary : Colors.grey,
-                                              foregroundColor: Colors.white,
+                                              foregroundColor: isWithinBudget ? (isDark ? const Color(0xFF0F172A) : Colors.white) : Colors.white70,
                                             ),
                                             onPressed: () {
                                               Navigator.pop(ctx);
@@ -764,8 +764,8 @@ class _SelectPlacesScreenState extends State<SelectPlacesScreen>
                                               ? (isDark ? Colors.grey[800] : Colors.grey.shade300)
                                               : themePrimary,
                                           foregroundColor: isSelected
-                                              ? (isDark ? Colors.white70 : Colors.black54)
-                                              : (isDark ? Colors.deepPurple[900] : Colors.white),
+                                              ? (isDark ? Colors.white : Colors.grey[800])
+                                              : (isDark ? const Color(0xFF0F172A) : Colors.white),
                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                         ),
@@ -1053,7 +1053,7 @@ class _SelectPlacesScreenState extends State<SelectPlacesScreen>
             onPressed: _saveItinerary,
             style: ElevatedButton.styleFrom(
               backgroundColor: themePrimary,
-              foregroundColor: isDark ? Colors.deepPurple[900] : Colors.white,
+              foregroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),

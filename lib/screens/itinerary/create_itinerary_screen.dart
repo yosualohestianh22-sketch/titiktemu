@@ -45,9 +45,9 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
   DateTime? _endDate;
   int _travelersCount = 1;
 
-  // Warna tema utama
-  static const _gradientStart = Color(0xFF8E2DE2);
-  static const _gradientEnd = Color(0xFF4A00E0);
+  // Warna tema utama (Vibrant & Glowing Indigo)
+  static const _gradientStart = Color(0xFF818CF8);
+  static const _gradientEnd = Color(0xFF4F46E5);
 
   Future<void> _pickDateRange() async {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -65,7 +65,7 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
             colorScheme: isDark
                 ? ColorScheme.dark(
                     primary: themePrimary,
-                    onPrimary: Colors.deepPurple[900]!,
+                    onPrimary: const Color(0xFF0F172A),
                     secondary: themePrimary.withValues(alpha: 0.15),
                     onSecondary: themePrimary,
                     surface: themeCardColor,
@@ -74,10 +74,10 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
                 : ColorScheme.light(
                     primary: themePrimary,
                     onPrimary: Colors.white,
-                    secondary: const Color(0xFFF3E5F5),
+                    secondary: const Color(0xFFEEF2FF),
                     onSecondary: themePrimary,
                     surface: themeCardColor,
-                    onSurface: const Color(0xFF1E1E2C),
+                    onSurface: const Color(0xFF1E293B),
                   ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(foregroundColor: themePrimary),

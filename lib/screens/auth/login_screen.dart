@@ -350,7 +350,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   elevation: 4,
                                   backgroundColor: primaryThemeColor,
                                   foregroundColor: isDark
-                                      ? Colors.deepPurple[900]
+                                      ? const Color(0xFF0F172A)
                                       : Colors.white,
                                 ),
                                 child: auth.isLoading
@@ -360,7 +360,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
                                           color: isDark
-                                              ? Colors.deepPurple[900]
+                                              ? const Color(0xFF0F172A)
                                               : Colors.white,
                                         ),
                                       )

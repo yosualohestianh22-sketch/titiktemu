@@ -122,10 +122,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return ElevatedButton(
                       onPressed: auth.isLoading ? null : _register,
                       child: auth.isLoading
-                          ? const SizedBox(
+                          ? SizedBox(
                               height: 20,
                               width: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: isDark ? const Color(0xFF0F172A) : Colors.white,
+                              ),
                             )
                           : const Text(
                               'DAFTAR',

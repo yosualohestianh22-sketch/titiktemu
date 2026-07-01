@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Warna Utama (Sesuai kesepakatan: Ungu Pastel Terang)
-  static const Color primaryColor = Color(0xFFCBC3E3);
+  // Warna Utama Light Theme (Vibrant Indigo)
+  static const Color primaryColor = Color(0xFF6366F1);
+  
+  // Warna Utama Dark Theme (Glowing Indigo)
+  static const Color darkPrimaryColor = Color(0xFF818CF8);
 
   // Warna Latar Light Theme
   static const Color backgroundColor = Color(0xFFFFFFFF);
-  static const Color textColor = Color(0xFF333333);
+  static const Color textColor = Color(0xFF1E293B); // Slate 800
+  static const Color secondaryTextColor = Color(0xFF64748B); // Slate 500
 
-  // Warna Latar Dark Theme (Deep Charcoal & Purple)
-  static const Color darkBackgroundColor = Color(0xFF12121E);
-  static const Color darkSurfaceColor = Color(0xFF1E1E2E);
-  static const Color darkTextColor = Color(0xFFF5F5FA);
-  static const Color darkSecondaryTextColor = Color(0xFFA0A0B0);
+  // Warna Latar Dark Theme (Deep Midnight Indigo-Slate)
+  static const Color darkBackgroundColor = Color(0xFF0A0A14);
+  static const Color darkSurfaceColor = Color(0xFF16162A);
+  static const Color darkTextColor = Color(0xFFF8FAFC); // Slate 50
+  static const Color darkSecondaryTextColor = Color(0xFF94A3B8); // Slate 400
 
   // Konfigurasi ThemeData Material 3 - Light Theme
   static ThemeData get lightTheme {
@@ -26,9 +30,7 @@ class AppTheme {
         onSurface: textColor,
         brightness: Brightness.light,
       ),
-      scaffoldBackgroundColor: const Color(
-        0xFFF5F5FA,
-      ), // Background abu-abu sangat muda khas light theme
+      scaffoldBackgroundColor: const Color(0xFFF9FAFB), // Background abu-abu muda bersih
       cardColor: backgroundColor,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -40,9 +42,9 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
-          foregroundColor:
-              Colors.deepPurple[900], // Kontras agar teks terlihat jelas
-          elevation: 0,
+          foregroundColor: Colors.white, // Kontras tinggi teks putih di atas tombol biru/indigo
+          elevation: 2,
+          shadowColor: primaryColor.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -68,9 +70,9 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: primaryColor, width: 2),
         ),
-        labelStyle: const TextStyle(color: Colors.grey),
-        prefixIconColor: Colors.grey,
-        suffixIconColor: Colors.grey,
+        labelStyle: const TextStyle(color: secondaryTextColor),
+        prefixIconColor: secondaryTextColor,
+        suffixIconColor: secondaryTextColor,
       ),
     );
   }
@@ -81,8 +83,8 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryColor,
-        primary: primaryColor,
+        seedColor: darkPrimaryColor,
+        primary: darkPrimaryColor,
         surface: darkSurfaceColor,
         onSurface: darkTextColor,
         brightness: Brightness.dark,
@@ -98,10 +100,10 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
-          foregroundColor:
-              Colors.deepPurple[900], // Kontras agar teks terlihat jelas
-          elevation: 0,
+          backgroundColor: darkPrimaryColor,
+          foregroundColor: const Color(0xFF0F172A), // Teks gelap tajam di atas tombol terang glow
+          elevation: 4,
+          shadowColor: darkPrimaryColor.withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -110,7 +112,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0xFF161622),
+        fillColor: const Color(0xFF1F1F35),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 16,
           horizontal: 20,
@@ -125,7 +127,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: primaryColor, width: 2),
+          borderSide: const BorderSide(color: darkPrimaryColor, width: 2),
         ),
         labelStyle: const TextStyle(color: darkSecondaryTextColor),
         prefixIconColor: darkSecondaryTextColor,
