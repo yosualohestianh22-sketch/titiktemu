@@ -152,7 +152,7 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
     );
   }
 
-  // Widget kotak tanggal Berangkat / Pulang
+  // Widget kotak tanggal Berangkat / Pulang (Traveloka Style)
   Widget _buildDateBox({
     required String label,
     required DateTime? date,
@@ -162,70 +162,80 @@ class _CreateItineraryScreenState extends State<CreateItineraryScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themePrimary = Theme.of(context).primaryColor;
 
+    String dayName = isStart ? 'Berangkat' : 'Pulang';
+    String formattedDate = 'Pilih Tanggal';
+
+    if (isSelected) {
+      dayName = DateFormat('EEEE', 'id_ID').format(date); // e.g. Kamis
+      formattedDate = DateFormat('dd MMM yyyy', 'id_ID').format(date); // e.g. 02 Jul 2026
+    }
+
     return Expanded(
       child: GestureDetector(
         onTap: _pickDateRange,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: isSelected
                 ? (isDark
-                      ? themePrimary.withValues(alpha: 0.15)
-                      : const Color(0xFFF3E5F5))
+                      ? themePrimary.withValues(alpha: 0.1)
+                      : const Color(0xFFF0F2FF))
                 : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: isSelected
                   ? themePrimary
                   : (isDark ? Colors.grey[850]! : Colors.grey[300]!),
-              width: isSelected ? 2 : 1,
+              width: isSelected ? 1.5 : 1,
             ),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: themePrimary.withValues(alpha: 0.15),
-                      blurRadius: 12,
+                      color: themePrimary.withValues(alpha: 0.1),
+                      blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
                   ]
                 : [],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Row(
-                children: [
-                  Icon(
-                    isStart
-                        ? Icons.flight_takeoff_rounded
-                        : Icons.flight_land_rounded,
-                    size: 14,
-                    color: isSelected ? themePrimary : Colors.grey[500],
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: isSelected ? themePrimary : Colors.grey[500],
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ],
+              Icon(
+                isStart
+                    ? Icons.calendar_today_rounded
+                    : Icons.calendar_month_rounded,
+                size: 22,
+                color: isSelected ? themePrimary : Colors.grey[400],
               ),
-              const SizedBox(height: 8),
-              Text(
-                isSelected
-                    ? DateFormat('EEE, dd MMM yyyy').format(date)
-                    : 'Pilih Tanggal',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: isSelected
-                      ? Theme.of(context).textTheme.bodyLarge?.color
-                      : Colors.grey[400],
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      isSelected ? '$label: $dayName' : label,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: isSelected ? themePrimary : Colors.grey[500],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      formattedDate,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: isSelected
+                            ? (isDark ? Colors.white : const Color(0xFF1E293B))
+                            : Colors.grey[400],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
