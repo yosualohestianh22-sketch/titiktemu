@@ -207,11 +207,12 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // Navigasi ke halaman tambah kuliner yang kamu buat sebelumnya
+                      // Navigasi ke halaman tambah kuliner tanpa mengoper ID
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TambahKulinerScreen(),
+                          builder: (context) =>
+                              const TambahKulinerScreen(), // KODE YANG SUDAH DIPERBAIKI
                         ),
                       );
                     },
@@ -243,10 +244,12 @@ class HomeScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
+                    // Navigasi ke halaman tambah kuliner tanpa mengoper ID di sini
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HistoryScreen(),
+                        builder: (context) =>
+                            const TambahKulinerScreen(), // Kembalikan seperti ini
                       ),
                     );
                   },

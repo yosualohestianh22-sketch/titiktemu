@@ -100,7 +100,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     }
   }
 
-  // Let's define default coordinates for some popular cities
   static const Map<String, LatLng> _cityCoordinates = {
     'jakarta': LatLng(-6.2088, 106.8456),
     'bali': LatLng(-8.4095, 115.1889),
@@ -119,7 +118,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
         return _cityCoordinates[key]!;
       }
     }
-    // Default to Indonesia center coordinates if not matched
     return const LatLng(-0.7893, 113.9213);
   }
 
@@ -144,9 +142,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
   }
 
   Future<void> _openGoogleMaps(double lat, double lng) async {
-    final Uri url = Uri.parse(
-      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
-    );
+    final Uri url = Uri.parse('http://maps.google.com/?q=$lat,$lng');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -181,12 +177,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
 
     List<int> completed;
     if (newStatus) {
-      // Tandai semua hari selesai
       final totalDays =
           itinerary.endDate.difference(itinerary.startDate).inDays + 1;
       completed = List<int>.generate(totalDays, (i) => i + 1);
     } else {
-      // Batalkan semua hari
       completed = [];
     }
 
@@ -272,7 +266,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                     child: Text(
                       placeItem.place.price == 0
                           ? 'Gratis'
-                          : 'Rp ${_formatNumber(placeItem.place.price)}',
+                          : _formatNumber(placeItem.place.price),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: themePrimary,
@@ -364,7 +358,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContextcontext) {
     final itineraryProvider = context.watch<ItineraryProvider>();
 
     return StreamBuilder<ItineraryModel>(
@@ -377,12 +371,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         final themePrimary = Theme.of(context).primaryColor;
 
-        // Generate List of LatLng for polyline
         final List<LatLng> routePoints = itinerary.places
             .map((item) => LatLng(item.place.latitude, item.place.longitude))
             .toList();
 
-        // Create markers for each place
         final List<Marker> placeMarkers = routePoints.asMap().entries.map((
           entry,
         ) {
@@ -426,9 +418,12 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
           );
         }).toList();
 
-        // Add Hotel to markers if present
-        if (itinerary.hotelLatitude != null && itinerary.hotelLongitude != null) {
-          final hotelLatLng = LatLng(itinerary.hotelLatitude!, itinerary.hotelLongitude!);
+        if (itinerary.hotelLatitude != null &&
+            itinerary.hotelLongitude != null) {
+          final hotelLatLng = LatLng(
+            itinerary.hotelLatitude!,
+            itinerary.hotelLongitude!,
+          );
           placeMarkers.add(
             Marker(
               point: hotelLatLng,
@@ -438,7 +433,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('🏨 Hotel: ${itinerary.hotelName} (Rp ${_formatNumber(itinerary.hotelPrice ?? 0)} / malam)'),
+                      content: Text(
+                        '🏨 Hotel: ${itinerary.hotelName} (${_formatNumber(itinerary.hotelPrice ?? 0)} / malam)',
+                      ),
                       behavior: SnackBarBehavior.floating,
                     ),
                   );
@@ -452,22 +449,28 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                       width: 2.5,
                     ),
                     boxShadow: const [
-                      BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 3)),
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      ),
                     ],
                   ),
                   child: const Center(
-                    child: Icon(Icons.hotel_rounded, color: Colors.white, size: 20),
+                    child: Icon(
+                      Icons.hotel_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
             ),
           );
-          
-          // Add to bounds points
+
           routePoints.add(hotelLatLng);
         }
 
-        // Determine Bounds to fit all points
         CameraFit? cameraFit;
         if (routePoints.isNotEmpty) {
           final bounds = LatLngBounds.fromPoints(routePoints);
@@ -481,7 +484,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: CustomScrollView(
             slivers: [
-              // Elegant Header Image/Map Sliver
               SliverAppBar(
                 expandedHeight: 320,
                 pinned: true,
@@ -515,7 +517,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                 flexibleSpace: FlexibleSpaceBar(
                   background: Stack(
                     children: [
-                      // Google Map or Mock Map
                       _showMockMap
                           ? _buildMockMap(targetLatLng, themePrimary)
                           : FlutterMap(
@@ -566,7 +567,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                                 ),
                               ],
                             ),
-                      // Floating button to open Google Maps Route
                       Positioned(
                         top: 50,
                         right: 16,
@@ -580,7 +580,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           ),
                         ),
                       ),
-                      // Elegant bottom gradient for text contrast
                       Positioned.fill(
                         child: Container(
                           decoration: const BoxDecoration(
@@ -596,7 +595,6 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           ),
                         ),
                       ),
-                      // Positioned Itinerary Title & City
                       Positioned(
                         bottom: 20,
                         left: 20,
@@ -648,21 +646,12 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Travel details card
                         Card(
                           elevation: 4,
                           color: Theme.of(context).cardColor,
-                          shadowColor: themePrimary.withValues(
-                            alpha: isDark ? 0.3 : 0.1,
-                          ),
+                          shadowColor: themePrimary.withValues(alpha: 0.1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(
-                              color: isDark
-                                  ? Colors.grey[850]!
-                                  : Colors.transparent,
-                              width: 1,
-                            ),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(20),
@@ -746,7 +735,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                         ),
                         const SizedBox(height: 24),
 
-                        // Rute Perjalanan (Daftar Wisata)
+                        // 1. Rute Perjalanan (Daftar Wisata)
                         const Text(
                           'Rute Perjalanan & Lokasi',
                           style: TextStyle(
@@ -755,12 +744,112 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-
-                        // Render daftar wisata
                         _buildPlacesList(itinerary.places, itinerary),
 
-                        const SizedBox(height: 24),
-                        // Trip completion section
+                        const SizedBox(height: 32),
+
+                        // === 2. FITUR BARU: DAFTAR RENCANA KULINER (DI SINI TEMPATNYA) ===
+                        const Text(
+                          '🍽️ Rencana Kuliner Pilihan',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+
+                        StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('kuliner')
+                              .where(
+                                'itinerary_id',
+                                isEqualTo: itinerary.id,
+                              ) // Filter berdasarkan ID perjalanan saat ini
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            if (!snapshot.hasData ||
+                                snapshot.data!.docs.isEmpty) {
+                              return Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).cardColor,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: isDark
+                                        ? Colors.grey[850]!
+                                        : Colors.grey.shade200,
+                                  ),
+                                ),
+                                child: Text(
+                                  'Belum ada rekomendasi kuliner yang disimpan untuk perjalanan ini.',
+                                  style: TextStyle(
+                                    color: isDark
+                                        ? Colors.grey[400]
+                                        : Colors.grey,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            }
+
+                            final listKuliner = snapshot.data!.docs;
+
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: listKuliner.length,
+                              itemBuilder: (context, index) {
+                                final data =
+                                    listKuliner[index].data()
+                                        as Map<String, dynamic>;
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 6,
+                                  ),
+                                  elevation: 2,
+                                  color: Theme.of(context).cardColor,
+                                  child: ListTile(
+                                    leading: const CircleAvatar(
+                                      backgroundColor: Colors.amber,
+                                      child: Icon(
+                                        Icons.restaurant,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    title: Text(
+                                      data['nama_kuliner'] ?? '',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      data['deskripsi'] ??
+                                          'Tidak ada deskripsi',
+                                    ),
+                                    trailing: Text(
+                                      data['daerah'] ?? '',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+
+                        // ==============================================================
+                        const SizedBox(height: 32),
                         _buildTripCompletionSection(context, itinerary),
                         const SizedBox(height: 40),
                       ],
@@ -775,14 +864,84 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     );
   }
 
-  // --- Widget Tambahan untuk Daftar Wisata ---
+  // --- Sisa Fungsi Pendukung Lainnya ---
+  Widget _buildInfoRow(IconData icon, String label, String value, Color color) {
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 22),
+        const SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              value,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
-  double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  Widget _buildInviteCodeRow(BuildContext context, String code, Color color) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildInfoRow(Icons.qr_code_rounded, 'Kode Undangan', code, color),
+        IconButton(
+          icon: const Icon(Icons.copy_rounded, size: 20),
+          onPressed: () {
+            Clipboard.setData(ClipboardData(text: code));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Kode undangan berhasil disalin!')),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCollaboratorsBar(List<Map<String, dynamic>> profiles) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: profiles
+          .map(
+            (p) => const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 2.0),
+              child: CircleAvatar(
+                radius: 14,
+                child: Icon(Icons.person, size: 16),
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget _buildMockMap(LatLng center, Color color) {
+    return Container(
+      color: color.withValues(alpha: 0.1),
+      child: const Center(child: Icon(Icons.map)),
+    );
+  }
+
+  double _calculateDistance(
+    double lat1,
+    double lon1,
+    double lat2,
+    double lon2,
+  ) {
     const p = 0.017453292519943295;
-    final a = 0.5 - cos((lat2 - lat1) * p)/2 + 
-          cos(lat1 * p) * cos(lat2 * p) * 
-          (1 - cos((lon2 - lon1) * p))/2;
-    return 12742 * asin(sqrt(a)); // KM
+    final a =
+        0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 
   Widget _buildPlacesList(
@@ -804,14 +963,13 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
           ),
         ),
         child: Text(
-          'Belum ada tempat wisata yang di-generate. Coba buat itinerary baru.',
+          'Belum ada tempat wisata yang di-generate.',
           style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey),
           textAlign: TextAlign.center,
         ),
       );
     }
 
-    // Kelompokkan wisata berdasarkan hari
     final Map<int, List<ItineraryItemModel>> groupedPlaces = {};
     for (var item in places) {
       groupedPlaces.putIfAbsent(item.dayNumber, () => []).add(item);
@@ -823,119 +981,21 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: sortedDays.map((day) {
         final dayPlaces = groupedPlaces[day]!;
-        final dayDate = itinerary.startDate.add(Duration(days: day - 1));
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: themePrimary,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      'Hari $day',
-                      style: TextStyle(
-                        color: isDark ? Colors.deepPurple[900] : Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    _formatDate(dayDate),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.grey[400] : Colors.grey.shade600,
-                    ),
-                  ),
-                  const Spacer(),
-                  // Checklist Hari
-                  _buildDayCheckbox(context, day, itinerary),
-                ],
-              ),
-            ),
-            ...dayPlaces.asMap().entries.map((entry) {
-              final idx = entry.key;
-              final item = entry.value;
-              double? distance;
-              if (idx > 0) {
-                final prevItem = dayPlaces[idx - 1];
-                distance = _calculateDistance(
-                  prevItem.place.latitude,
-                  prevItem.place.longitude,
-                  item.place.latitude,
-                  item.place.longitude,
-                );
-              }
-              return _buildPlaceCard(item, distance);
-            }),
-          ],
+        return ExpansionTile(
+          title: Text(
+            'Hari $day',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          children: dayPlaces
+              .map(
+                (item) => ListTile(
+                  title: Text(item.place.name),
+                  subtitle: Text(item.place.category),
+                ),
+              )
+              .toList(),
         );
       }).toList(),
-    );
-  }
-
-  Widget _buildDayCheckbox(
-    BuildContext context,
-    int day,
-    ItineraryModel itinerary,
-  ) {
-    final isCompleted = itinerary.completedDays.contains(day);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return InkWell(
-      onTap: () => _toggleDayCompletion(itinerary, day),
-      borderRadius: BorderRadius.circular(20),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: isCompleted
-              ? Colors.green.withValues(alpha: 0.15)
-              : (isDark ? Colors.grey[850] : Colors.grey[100]),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isCompleted
-                ? Colors.green
-                : (isDark ? Colors.grey[800]! : Colors.grey[300]!),
-            width: 1.5,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isCompleted
-                  ? Icons.check_circle_rounded
-                  : Icons.radio_button_unchecked_rounded,
-              color: isCompleted
-                  ? Colors.green
-                  : (isDark ? Colors.grey[400] : Colors.grey[600]),
-              size: 16,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              isCompleted ? 'Selesai' : 'Tandai Selesai',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: isCompleted
-                    ? Colors.green
-                    : (isDark ? Colors.grey[300] : Colors.grey[700]),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -943,571 +1003,10 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
     BuildContext context,
     ItineraryModel itinerary,
   ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final themePrimary = Theme.of(context).primaryColor;
-    final isCompleted = itinerary.isCompleted;
-
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      child: isCompleted
-          ? Container(
-              key: const ValueKey('completed_banner'),
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xFF11998e),
-                    Color(0xFF38ef7d),
-                  ], // Gradien hijau premium
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withValues(alpha: 0.3),
-                    blurRadius: 15,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.celebration_rounded,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Perjalanan Selesai Semua! 🎉',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Selamat! Anda telah menyelesaikan seluruh rangkaian jadwal liburan ini dengan sukses.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      fontSize: 14,
-                      height: 1.4,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () => _toggleTripCompletion(itinerary),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.white.withValues(alpha: 0.15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                    ),
-                    child: const Text(
-                      'Batalkan Status Selesai',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : SizedBox(
-              key: const ValueKey('uncompleted_button'),
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton.icon(
-                onPressed: () => _toggleTripCompletion(itinerary),
-                icon: const Icon(Icons.check_circle_outline_rounded),
-                label: const Text(
-                  'Selesaikan Perjalanan',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: themePrimary,
-                  foregroundColor: isDark
-                      ? Colors.deepPurple[900]
-                      : Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  elevation: 0,
-                ),
-              ),
-            ),
-    );
-  }
-
-  Widget _buildPlaceCard(ItineraryItemModel item, double? distanceToPrev) {
-    final place = item.place;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final themePrimary = Theme.of(context).primaryColor;
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isDark ? Colors.grey[850]! : Colors.grey.shade200,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.1 : 0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () => _openGoogleMaps(place.latitude, place.longitude),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Row(
-              children: [
-                // Gambar Tempat
-                Image.network(
-                  place.imageUrl,
-                  width: 110,
-                  height: 125,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 110,
-                      height: 125,
-                      color: isDark ? Colors.grey[800] : Colors.grey.shade200,
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        color: Colors.grey,
-                      ),
-                    );
-                  },
-                ),
-                // Detail Teks
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          place.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isDark
-                                    ? themePrimary.withValues(alpha: 0.15)
-                                    : const Color(0xFFF3E5F5),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                place.category,
-                                style: TextStyle(
-                                  color: isDark
-                                      ? themePrimary
-                                      : const Color(0xFF6A1B9A),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            // Duration badge
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.orange.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                '${item.durationHours} Jam',
-                                style: const TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.payments_outlined,
-                              size: 14,
-                              color: isDark ? Colors.grey[400] : Colors.grey,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              place.price == 0
-                                  ? 'Gratis'
-                                  : 'Rp ${NumberFormat('#,###', 'id_ID').format(place.price)}',
-                              style: TextStyle(
-                                color: isDark
-                                    ? Colors.grey[400]
-                                    : Colors.grey.shade600,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (distanceToPrev != null) ...[
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_outlined,
-                                size: 14,
-                                color: Colors.blue,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                'Jarak: ${distanceToPrev.toStringAsFixed(1)} km',
-                                style: const TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                ),
-                // Tombol Navigasi kecil di kanan
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: themePrimary.withValues(alpha: 0.15),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.navigation_rounded,
-                      color: themePrimary,
-                      size: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfoRow(
-    IconData icon,
-    String label,
-    String value,
-    Color primaryColor,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: primaryColor.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(icon, color: primaryColor, size: 22),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isDark ? Colors.grey[400] : Colors.grey.shade600,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInviteCodeRow(
-    BuildContext context,
-    String code,
-    Color primaryColor,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: primaryColor.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(Icons.people_alt_rounded, color: primaryColor, size: 22),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Kode Undangan Rekan',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isDark ? Colors.grey[400] : Colors.grey.shade600,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  Text(
-                    code.isEmpty ? 'Generasi...' : code,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  if (code.isNotEmpty)
-                    GestureDetector(
-                      onTap: () {
-                        Clipboard.setData(ClipboardData(text: code));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Kode undangan "$code" berhasil disalin!',
-                            ),
-                            duration: const Duration(seconds: 2),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: isDark ? Colors.grey[800] : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Icon(
-                          Icons.copy_rounded,
-                          size: 14,
-                          color: isDark ? Colors.grey[300] : Colors.grey[700],
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMockMap(LatLng targetLatLng, Color primaryColor) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      color: isDark ? const Color(0xFF1F2E35) : const Color(0xFFE0F7FA),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.map_rounded, size: 64, color: primaryColor),
-            const SizedBox(height: 12),
-            Text(
-              'Mock Map: ${widget.itinerary.city}',
-              style: TextStyle(
-                color: primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Coordinate: ${targetLatLng.latitude.toStringAsFixed(4)}, ${targetLatLng.longitude.toStringAsFixed(4)}',
-              style: TextStyle(
-                color: isDark ? Colors.white70 : Colors.black54,
-                fontSize: 13,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'Menggunakan Fallback Peta Indah',
-                style: TextStyle(
-                  color: isDark ? Colors.deepPurple[900] : Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCollaboratorsBar(List<Map<String, dynamic>> profiles) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    if (profiles.isEmpty) return const SizedBox.shrink();
-
-    // Figma border colors
-    final List<Color> borderColors = [
-      Colors.blue,
-      Colors.orange,
-      Colors.pink,
-      Colors.green,
-      Colors.purple,
-    ];
-
-    const double avatarSize = 30.0;
-    const double overlap = 8.0;
-
-    final displayProfiles = profiles.take(4).toList();
-    final remainingCount = profiles.length - displayProfiles.length;
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: avatarSize,
-          width: displayProfiles.isEmpty
-              ? 0
-              : (displayProfiles.length * (avatarSize - overlap)) + overlap,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: List.generate(displayProfiles.length, (index) {
-              final profile = displayProfiles[index];
-              final name = profile['name'] ?? 'Traveler';
-              final photoUrl = profile['photoUrl'];
-              final color = borderColors[index % borderColors.length];
-
-              return Positioned(
-                left: index * (avatarSize - overlap),
-                child: Tooltip(
-                  message: name,
-                  child: Container(
-                    width: avatarSize,
-                    height: avatarSize,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: color, width: 2),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: CircleAvatar(
-                      backgroundColor: isDark
-                          ? Colors.grey[800]
-                          : Colors.grey[200],
-                      backgroundImage: photoUrl != null
-                          ? NetworkImage(photoUrl)
-                          : null,
-                      child: photoUrl == null
-                          ? Text(
-                              name.isNotEmpty ? name[0].toUpperCase() : 'T',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                color: isDark ? Colors.white : Colors.black87,
-                              ),
-                            )
-                          : null,
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-        if (remainingCount > 0) ...[
-          const SizedBox(width: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            decoration: BoxDecoration(
-              color: isDark ? Colors.grey[850] : Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              '+$remainingCount',
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: isDark ? Colors.grey[400] : Colors.grey[700],
-              ),
-            ),
-          ),
-        ],
-      ],
+    return CheckboxListTile(
+      title: const Text('Tandai Seluruh Perjalanan Selesai'),
+      value: itinerary.isCompleted,
+      onChanged: (bool? value) => _toggleTripCompletion(itinerary),
     );
   }
 }
